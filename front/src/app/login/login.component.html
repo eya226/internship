@@ -1,0 +1,46 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="login-header">
+      <img src="assets/log.png" alt="Logo" class="logo">
+      <h1>Connexion</h1>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" 
+               id="username" 
+               formControlName="username" 
+               placeholder="Entrez votre nom d'utilisateur"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" 
+               id="password" 
+               formControlName="password" 
+               placeholder="Entrez votre mot de passe"
+               required>
+      </div>
+
+      <div class="remember-me">
+        <input type="checkbox" id="remember" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}">
+        <label for="remember">Se souvenir de moi</label>
+      </div>
+
+      <div *ngIf="loginForm.invalid && loginForm.touched" class="error-message">
+        Veuillez remplir tous les champs obligatoires
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid" class="login-button">
+        Se connecter
+      </button>
+
+      <div class="login-footer">
+        <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+        <p>Pas encore de compte ? <a routerLink="/signup" class="signup-link">S'inscrire</a></p>
+      </div>
+    </form>
+  </div>
+</div>

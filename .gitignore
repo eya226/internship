@@ -1,0 +1,21 @@
+# Angular
+/front/.angular/
+/front/dist/
+/front/node_modules/
+
+# .NET
+/StockageOTApp/bin/
+/StockageOTApp/obj/
+/.vs/
+
+# Logs
+buildlog.txt
+*.log
+
+# IDE
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,148 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\data\\applicationdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:data\\applicationdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\controllers\\stockotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:controllers\\stockotcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\controllers\\stockagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:controllers\\stockagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\dtos\\stockotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:dtos\\stockotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|c:\\users\\trabe\\source\\repos\\stockageotapp\\models\\stockot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB8160B2-3873-4655-AE39-05FD015EA4AE}|StockageOTApp.csproj|solutionrelative:models\\stockot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 100,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 391,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T15:42:44.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContextFactory.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Data\\ApplicationDbContextFactory.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContextFactory.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Data\\ApplicationDbContextFactory.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContextFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T10:49:39.956Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T10:49:39.148Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StockOT.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Models\\StockOT.cs",
+              "RelativeDocumentMoniker": "Models\\StockOT.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Models\\StockOT.cs",
+              "RelativeToolTip": "Models\\StockOT.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T15:09:54.554Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StockOTController.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Controllers\\StockOTController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StockOTController.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Controllers\\StockOTController.cs",
+              "RelativeToolTip": "Controllers\\StockOTController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T09:32:30.709Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StockOTDto.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\DTOs\\StockOTDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\StockOTDto.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\DTOs\\StockOTDto.cs",
+              "RelativeToolTip": "DTOs\\StockOTDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T09:31:50.954Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StockageController.cs",
+              "DocumentMoniker": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Controllers\\StockageController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StockageController.cs",
+              "ToolTip": "C:\\Users\\trabe\\source\\repos\\StockageOTApp\\Controllers\\StockageController.cs",
+              "RelativeToolTip": "Controllers\\StockageController.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAowFwAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-05T09:21:15.196Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 9,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

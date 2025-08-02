@@ -1,0 +1,252 @@
+/* Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+:root {
+  --primary-blue: #1a73e8;
+  --dark-blue: #0d47a1;
+  --light-blue: #e8f0fe;
+  --white: #ffffff;
+  --light-gray: #f5f5f5;
+  --medium-gray: #e0e0e0;
+  --dark-gray: #5f6368;
+  --error-red: #d93025;
+}
+
+.stock-registration-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.brand-icon {
+  font-size: 2rem;
+  color: var(--primary-blue);
+}
+
+.main-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--dark-blue);
+  margin: 0;
+}
+
+.blue-divider {
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--dark-blue));
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 3px;
+}
+
+/* Navigation */
+.navigation-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.back-button {
+  background-color: var(--white);
+  color: var(--primary-blue);
+  border: 1px solid var(--primary-blue);
+}
+
+.home-button {
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.nav-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form Card */
+.form-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid var(--medium-gray);
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--dark-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.form-title i {
+  color: var(--primary-blue);
+}
+
+/* Form Elements */
+.stock-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--dark-gray);
+}
+
+.input-label i {
+  color: var(--primary-blue);
+  width: 20px;
+  text-align: center;
+}
+
+.required-field {
+  color: var(--error-red);
+  margin-left: 0.25rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.5rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.input-info-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-blue);
+}
+
+.hint-text {
+  font-size: 0.85rem;
+  color: var(--dark-gray);
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+/* Submit Button */
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: var(--dark-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.submit-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stock-registration-container {
+    padding: 1.5rem;
+  }
+  
+  .main-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .navigation-section {
+    flex-direction: column;
+  }
+  
+  .form-title {
+    font-size: 1.3rem;
+  }
+}
+/* Add these at the end of your existing CSS */
+.success-snackbar {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}

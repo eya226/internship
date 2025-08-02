@@ -1,0 +1,428 @@
+<div class="dashboard-container">
+  <!-- Modern Glass Navbar -->
+  <div class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-brand">
+        <div class="logo-container">
+          <img src="assets/emdep-logo.png" alt="Logo EMDEP" class="navbar-logo">
+        </div>
+        <div class="navbar-titles">
+          <h1 class="navbar-title">Tableau de bord logistique EMDEP</h1>
+          <p class="navbar-subtitle">Suivi des baggets en temps réel</p>
+        </div>
+      </div>
+      
+      <div class="navbar-actions">
+        <button mat-icon-button class="notification-btn" (click)="toggleAlertPanel()" matTooltip="Notifications">
+          <div class="notification-icon-container">
+            <mat-icon>notifications</mat-icon>
+            <span class="notification-badge" *ngIf="alertCount > 0">{{alertCount}}</span>
+          </div>
+        </button>
+      </div>
+    </div>
+    
+    <div class="alert-panel" *ngIf="showAlertPanel" @slideIn>
+      <div class="alert-panel-header">
+        <h3>Alertes et notifications</h3>
+        <button mat-icon-button (click)="toggleAlertPanel()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="alerts.length === 0" class="no-alerts">
+        <div class="no-alerts-content">
+          <mat-icon>check_circle</mat-icon>
+          <p>Aucune alerte active</p>
+        </div>
+      </div>
+      <div class="alert-items-container">
+        <div *ngFor="let alert of alerts" class="alert-item" [class.stuck]="alert.type === 'stuck'" 
+             [class.full]="alert.type === 'full'" [class.utilization]="alert.type === 'utilization'">
+          <div class="alert-item-header">
+            <mat-icon *ngIf="alert.type === 'stuck'">warning</mat-icon>
+            <mat-icon *ngIf="alert.type === 'full'">error</mat-icon>
+            <mat-icon *ngIf="alert.type === 'utilization'">trending_up</mat-icon>
+            <span class="alert-item-title">{{alert.title}}</span>
+          </div>
+          <div class="alert-item-time">{{alert.time | date:'short'}}</div>
+          <div class="alert-item-content">{{alert.content}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Tab Navigation -->
+  <nav class="modern-tabs">
+    <div class="tabs-container">
+      <button *ngFor="let tab of tabs" class="tab-button" 
+              [class.active]="activeTab === tab" (click)="setActiveTab(tab)">
+        <div class="tab-content">
+          <mat-icon class="tab-icon">
+            {{tab === 'map' ? 'map' : tab === 'bagets' ? 'view_list' : 'insights'}}
+          </mat-icon>
+          <span class="tab-label">
+            {{tab === 'map' ? 'Carte' : tab === 'bagets' ? 'Baggets' : 'Analytique'}}
+          </span>
+        </div>
+        <div class="tab-indicator" [class.active]="activeTab === tab"></div>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Loading and Error States -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-content">
+      <mat-spinner diameter="48" strokeWidth="4"></mat-spinner>
+      <p>Chargement des données logistiques...</p>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-state">
+    <div class="error-content">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{errorMessage}}</p>
+      <button mat-stroked-button color="warn" (click)="loadData()">Réessayer</button>
+    </div>
+  </div>
+
+  <!-- Map View -->
+  <div class="tab-content" *ngIf="activeTab === 'map' && !loading && !errorMessage" @fadeIn>
+    <div class="map-controls">
+      <button mat-stroked-button (click)="toggleMapSize()" class="map-control-button">
+        <mat-icon>{{mapExpanded ? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
+        {{mapExpanded ? 'Réduire' : 'Agrandir'}} la carte
+      </button>
+    </div>
+
+    <div class="warehouse-map">
+      <div class="map-container" [@expandMap]="mapExpanded ? 'expanded' : 'collapsed'">
+        <!-- Conveyor Path -->
+        <svg class="conveyor-path" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M20,30 Q35,30 35,45 Q35,60 50,60 Q65,60 65,45 Q65,30 80,30" 
+                fill="none" stroke="rgba(0, 95, 135, 0.1)" stroke-width="1" stroke-dasharray="2,2" />
+        </svg>
+        
+        <!-- Stations -->
+        <div class="station station-1">
+          <div class="station-icon-container">
+            <div class="station-icon">1</div>
+          </div>
+          <div class="station-metrics">
+            <div class="metric">
+              <span class="value">{{getStationCount('STATION_1')}}</span>
+              <span class="label">Articles</span>
+            </div>
+            <div class="metric">
+              <span class="value">{{getBagetCount('STATION_1')}}</span>
+              <span class="label">Baggets</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="station station-2">
+          <div class="station-icon-container">
+            <div class="station-icon">2</div>
+          </div>
+          <div class="station-metrics">
+            <div class="metric">
+              <span class="value">{{getStationCount('STATION_2')}}</span>
+              <span class="label">Articles</span>
+            </div>
+            <div class="metric">
+              <span class="value">{{getBagetCount('STATION_2')}}</span>
+              <span class="label">Baggets</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="station station-3">
+          <div class="station-icon-container">
+            <div class="station-icon">3</div>
+          </div>
+          <div class="station-metrics">
+            <div class="metric">
+              <span class="value">{{getStationCount('DELIVERED')}}</span>
+              <span class="label">Articles</span>
+            </div>
+            <div class="metric">
+              <span class="value">{{getBagetCount('DELIVERED')}}</span>
+              <span class="label">Baggets</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bagets -->
+        <div *ngFor="let baget of bagets" 
+             class="baget"
+             [style.left.%]="getBagetPosition(baget).x"
+             [style.top.%]="getBagetPosition(baget).y"
+             [style.background-color]="bagetColors[baget.emplacement] || generateColor(baget.emplacement)"
+             [class.moving]="baget.moving"
+             [class]="getBagetClass(baget)"
+             (mouseenter)="showBagetDetails(baget, $event)"
+             (mouseleave)="hideBagetDetails()"
+             (click)="selectBaget(baget.emplacement)">
+          <div class="baget-pulse"></div>
+          <div class="baget-label">{{baget.emplacement}}</div>
+        </div>
+      </div>
+
+      <!-- Baget Tooltip -->
+      <div class="baget-tooltip" *ngIf="hoveredBaget" 
+           [style.left]="tooltipPosition.x + 'px'" 
+           [style.top]="tooltipPosition.y + 'px'">
+        <h4>{{hoveredBaget.emplacement}}</h4>
+        <div class="tooltip-content">
+          <p><strong>Station actuelle:</strong> {{getStationName(hoveredBaget.station)}}</p>
+          <p><strong>Articles:</strong> {{getBagetItemCount(hoveredBaget.emplacement)}}</p>
+          <p><strong>Statut:</strong> {{hoveredBaget.moving ? 'En mouvement' : 'Stationnaire'}}</p>
+        </div>
+      </div>
+
+      <!-- Baget Details Panel -->
+      <div class="baget-details" *ngIf="selectedBaget" @slideIn>
+        <div class="panel-header">
+          <div class="panel-header-content">
+            <h2>Détails du bagget: {{selectedBaget}}</h2>
+            <div class="baget-color" [style.background-color]="bagetColors[selectedBaget || '']"></div>
+          </div>
+          <button mat-icon-button class="close-btn" (click)="selectedBaget = null">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        
+        <div class="actions">
+          <button mat-stroked-button color="primary" 
+                  *ngIf="getSelectedBagetStation() !== 'DELIVERED' && !isBagetMoving(selectedBaget)"
+                  (click)="moveToNextStation(selectedBaget || '')" class="action-button">
+            <mat-icon>arrow_forward</mat-icon>
+            Déplacer vers {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' : 'Livré'}}
+          </button>
+          <button mat-stroked-button color="accent" 
+                  *ngIf="getSelectedBagetStation() === 'DELIVERED' && !isBagetMoving(selectedBaget)"
+                  (click)="returnToStation1(selectedBaget || '')" class="action-button">
+            <mat-icon>replay</mat-icon>
+            Retour à la Station 1
+          </button>
+          <button mat-stroked-button color="warn" *ngIf="isBagetMoving(selectedBaget)" disabled class="action-button">
+            <mat-icon>hourglass_top</mat-icon>
+            En mouvement vers {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' : 
+                       getSelectedBagetStation() === 'STATION_2' ? 'Livré' : 'Station 1'}}
+          </button>
+        </div>
+
+        <div class="timeline">
+          <h3>Historique des mouvements</h3>
+          <div class="timeline-scroll-container">
+            <div class="timeline-item" *ngFor="let item of getBagetItems(selectedBaget)">
+              <div class="timeline-badge" [style.background-color]="bagetColors[selectedBaget || '']"></div>
+              <div class="timeline-content">
+                <div class="timeline-time">{{item.dateEnregistrement | date:'medium'}}</div>
+                <div class="timeline-event">
+                  <span class="station" [class.station-1]="item.station === 'STATION_1'"
+                        [class.station-2]="item.station === 'STATION_2'"
+                        [class.station-3]="item.station === 'DELIVERED'">
+                    {{getStationName(item.station)}}
+                  </span>
+                  <span class="item-code">{{item.codeComplet}}</span>
+                  <span class="item-status" *ngIf="isItemStuck(item)" [@pulse]="pulseAlert">
+                    ⚠️ Bloqué
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bagets View -->
+  <div class="tab-content" *ngIf="activeTab === 'bagets' && !loading && !errorMessage" @fadeIn>
+    <div class="baget-list-container">
+      <div class="section-header">
+        <h2>Tous les baggets</h2>
+        <div class="baget-stats">
+          <div class="stat-item">
+            <span class="stat-value">{{bagets.length}}</span>
+            <span class="stat-label">Total</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{stuckBagets.length}}</span>
+            <span class="stat-label">Bloqués</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{fullBagets.length}}</span>
+            <span class="stat-label">Pleins</span>
+          </div>
+        </div>
+      </div>
+      <div class="baget-grid">
+        <mat-card *ngFor="let baget of bagets" 
+                  class="baget-card"
+                  (click)="selectBaget(baget.emplacement)"
+                  [style.background-color]="bagetColors[baget.emplacement] || generateColor(baget.emplacement)">
+          <mat-card-header>
+            <mat-card-title>{{baget.emplacement}}</mat-card-title>
+            <mat-card-subtitle>
+              {{getStationName(baget.station)}} • {{getBagetItemCount(baget.emplacement)}} articles
+              <span *ngIf="baget.moving">(En mouvement)</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <div class="baget-hover-card">
+            <div *ngFor="let item of getBagetItems(baget.emplacement)" class="hover-item">
+              <span>{{item.codeComplet}}</span>
+              <span>{{item.station}}</span>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics View -->
+  <div class="tab-content" *ngIf="activeTab === 'analytics' && !loading && !errorMessage" @fadeIn>
+    <div class="analytics-dashboard">
+      <!-- Station Utilization Card -->
+      <mat-card class="analytics-card utilization-card">
+        <mat-card-header>
+          <mat-card-title>Utilisation des stations</mat-card-title>
+          <mat-card-subtitle>Répartition des articles entre les stations</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngFor="let stat of stationCounts" class="utilization-item">
+            <div class="station-label">
+              <div class="station-color" [style.background-color]="stat.station === 'STATION_1' ? brandColors.primary : 
+                                            stat.station === 'STATION_2' ? brandColors.secondary : brandColors.accent"></div>
+              <span>{{getStationName(stat.station)}}</span>
+            </div>
+            <div class="utilization-bar">
+              <div class="bar" [style.width]="(stat.count / (stockData.length || 1)) * 100 + '%'" 
+                   [style.background-color]="stat.station === 'STATION_1' ? brandColors.primary : 
+                                            stat.station === 'STATION_2' ? brandColors.secondary : brandColors.accent">
+                <span class="percent">{{(stat.count / (stockData.length || 1)) * 100 | number:'1.0-0'}}%</span>
+              </div>
+            </div>
+            <div class="count">{{stat.count}} articles</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- System Overview Card -->
+      <mat-card class="analytics-card overview-card">
+        <mat-card-header>
+          <mat-card-title>Aperçu du système</mat-card-title>
+          <mat-card-subtitle>Statistiques globales</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="analytics-grid">
+            <div class="analytics-widget">
+              <div class="widget-icon-container" [style.background-color]="brandColors.lightPrimary">
+                <mat-icon [style.color]="brandColors.primary">inventory</mat-icon>
+              </div>
+              <h3 class="widget-title">Total articles</h3>
+              <div class="widget-value">{{totalItems}}</div>
+              <div class="widget-subtext">Toutes stations</div>
+            </div>
+            <div class="analytics-widget">
+              <div class="widget-icon-container" [style.background-color]="brandColors.lightSecondary">
+                <mat-icon [style.color]="brandColors.secondary">local_shipping</mat-icon>
+              </div>
+              <h3 class="widget-title">Baggets actifs</h3>
+              <div class="widget-value">{{bagets.length}}</div>
+              <div class="widget-subtext">En circulation</div>
+            </div>
+            <div class="analytics-widget">
+              <div class="widget-icon-container" [style.background-color]="brandColors.lightAccent">
+                <mat-icon [style.color]="brandColors.accent">analytics</mat-icon>
+              </div>
+              <h3 class="widget-title">Moy. articles/bagget</h3>
+              <div class="widget-value">{{averageItemsPerBaget}}</div>
+              <div class="widget-subtext">Moyenne actuelle</div>
+            </div>
+            <div class="analytics-widget">
+              <div class="widget-icon-container" [style.background-color]="brandColors.lightPrimary">
+                <mat-icon [style.color]="brandColors.primary">done_all</mat-icon>
+              </div>
+              <h3 class="widget-title">Taux de livraison</h3>
+              <div class="widget-value">{{ (getStationCount('DELIVERED') / (totalItems || 1)) * 100 | number:'1.0-0' }}%</div>
+              <div class="widget-subtext">Articles livrés</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Recent Activity Card -->
+      <mat-card class="analytics-card activity-card">
+        <mat-card-header>
+          <mat-card-title>Activité récente</mat-card-title>
+          <mat-card-subtitle>Derniers mouvements enregistrés</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="activity-scroll-container">
+            <div *ngFor="let activity of recentActivity" class="timeline-item">
+              <div class="timeline-badge" [style.background-color]="brandColors.primary"></div>
+              <div class="timeline-content">
+                <div class="timeline-time">{{activity.time | date:'medium'}}</div>
+                <div class="timeline-event">
+                  <span class="station" [class.station-1]="activity.station === 'Station 1'"
+                        [class.station-2]="activity.station === 'Station 2'"
+                        [class.station-3]="activity.station === 'Livré'">
+                    {{activity.station}}
+                  </span>
+                  <span class="item-code">{{activity.code}}</span>
+                  <span>{{activity.action}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Alerts Card -->
+      <mat-card class="analytics-card alerts-card">
+        <mat-card-header>
+          <mat-card-title>Alertes</mat-card-title>
+          <mat-card-subtitle>Problèmes détectés</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="stuckBagets.length" class="alert-section">
+            <h4 [@pulse]="pulseAlert">
+              <mat-icon color="warn">warning</mat-icon>
+              Baggets bloqués (2+ jours)
+            </h4>
+            <mat-chip-listbox>
+              <mat-chip *ngFor="let bag of stuckBagets" 
+                       [style.background-color]="bagetColors[bag] || generateColor(bag)"
+                       (click)="selectBaget(bag)">
+                {{bag}}
+              </mat-chip>
+            </mat-chip-listbox>
+          </div>
+
+          <div *ngIf="fullBagets.length" class="alert-section">
+            <h4>
+              <mat-icon color="accent">error</mat-icon>
+              Baggets pleins (10+ articles)
+            </h4>
+            <mat-chip-listbox>
+              <mat-chip *ngFor="let bag of fullBagets" 
+                       [style.background-color]="bagetColors[bag] || generateColor(bag)"
+                       (click)="selectBaget(bag)">
+                {{bag}}
+              </mat-chip>
+            </mat-chip-listbox>
+          </div>
+
+          <div *ngIf="!stuckBagets.length && !fullBagets.length" class="no-alerts">
+            <div class="no-alerts-content">
+              <mat-icon>check_circle</mat-icon>
+              <p>Aucune alerte - Tous les baggets circulent normalement</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

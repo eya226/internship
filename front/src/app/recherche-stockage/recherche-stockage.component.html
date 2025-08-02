@@ -1,0 +1,98 @@
+
+<div class="container">
+  <!-- Navigation Bar -->
+  <nav class="navbar flex flex-wrap justify-center gap-4 mb-6">
+    <button routerLink="/secure/ajouter" class="btn-nav">← Retour à la liste</button>
+    <button routerLink="/secure/menu" class="btn-nav">🏠 Accueil</button>
+    <button (click)="onPrintFullList()" class="btn-nav">🖨️ Imprimer tout</button>
+  </nav>
+
+  <!-- Search Section -->
+  <div class="search-section max-w-md mx-auto mb-8">
+    <label for="searchInput" class="block mb-2">Rechercher par :</label>
+
+    <div class="search-container relative">
+      <input id="searchInput"
+             [(ngModel)]="searchTerm"
+             (input)="applyFilter()"
+             placeholder="Rechercher..."
+             class="search-input w-full p-3 border rounded shadow-sm"
+      />
+
+      <div class="search-dropdown-toggle mt-2 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors px-3 py-2 rounded text-sm"
+           (click)="showSearchOptions = !showSearchOptions">
+        {{ getSearchTypeLabel() }}
+        <span class="dropdown-arrow ml-1">▼</span>
+      </div>
+
+      <div *ngIf="showSearchOptions" class="search-dropdown mt-2 bg-white border rounded shadow p-2 z-10">
+        <div (click)="selectSearchType('codeOT')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code OT</div>
+        <div (click)="selectSearchType('codeITM')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code Item</div>
+        <div (click)="selectSearchType('codeComplet')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code Complet</div>
+        <div (click)="selectSearchType('emplacement')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code Baguette</div>
+        <div (click)="selectSearchType('station')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Station</div>
+      </div>
+    </div>
+
+    <!-- Selected Search Type Badge -->
+    <div *ngIf="searchType && !showSearchOptions" class="search-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full inline-block mt-4">
+      {{ getSearchTypeLabel() }}
+      <span (click)="clearSearchType()" class="ml-2 cursor-pointer">×</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="erreur" class="error-message bg-red-100 text-red-800 p-4 rounded mb-6">
+    ⚠️ {{ erreur }}
+  </div>
+
+  <!-- Results Table -->
+  <div class="table-container overflow-x-auto mb-8">
+    <h2 class="text-xl font-semibold text-center mb-4">🔍 Liste des enregistrements</h2>
+    <table class="min-w-full bg-white border border-gray-300 rounded shadow">
+      <thead class="bg-blue-100">
+        <tr>
+          <th class="border px-4 py-2 text-left">Code Plan</th>
+          <th class="border px-4 py-2 text-left">Code OT</th>
+          <th class="border px-4 py-2 text-left">Code Item</th>
+          <th class="border px-4 py-2 text-left">Code Baguette</th>
+          <th class="border px-4 py-2 text-left">Station</th>
+          <th class="border px-4 py-2 text-left">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of displayedStockages">
+          <td class="border px-4 py-2">{{ item.codeComplet || '-' }}</td>
+          <td class="border px-4 py-2">{{ item.codeOT }}</td>
+          <td class="border px-4 py-2">{{ item.codeITM }}</td>
+          <td class="border px-4 py-2">{{ item.emplacement }}</td>
+          <td class="border px-4 py-2">{{ item.station }}</td>
+          <td class="border px-4 py-2">{{ item.dateEnregistrement | date:'short' }}</td>
+        </tr>
+        <tr *ngIf="filteredStockages.length === 0">
+          <td colspan="6" class="text-center p-4 text-gray-500">
+            Aucun enregistrement trouvé.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="pagination flex justify-center gap-2 mt-4">
+    <button 
+      *ngFor="let page of [].constructor(totalPages); let i = index"
+      (click)="onPageChange(i + 1)"
+      [class.bg-blue-500]="currentPage === i + 1"
+      [class.text-white]="currentPage === i + 1"
+      class="px-4 py-2 border rounded hover:bg-blue-100">
+      {{ i + 1 }}
+    </button>
+  </div>
+</div>
+      
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <p class="footer-text">© 2025 EMDEP. Tous droits réservés.</p>
+  </div>

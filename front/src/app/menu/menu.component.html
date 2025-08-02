@@ -1,0 +1,41 @@
+<!-- src/app/menu/menu.component.html -->
+<div class="menu-container">
+  <div class="menu-header">
+    <img src="assets/log.png" alt="Company Logo" class="logo">
+    <h1 class="app-title">Gestion de Stockage</h1>
+    <p class="app-subtitle"></p>
+  </div>
+
+  <div class="menu-actions">
+    <div class="action-card" routerLink="/secure/ajouter">
+      <div class="action-icon">+</div>
+      <h3 class="action-title">Ajouter Stock</h3>
+      <p class="action-description"></p>
+    </div>
+
+    <div class="action-card" routerLink="/secure/recherche">
+      <div class="action-icon">🔍</div>
+      <h3 class="action-title">Rechercher</h3>
+      <p class="action-description"></p>
+    </div>
+
+    <div class="action-card" routerLink="/secure/enregistrement">
+      <div class="action-icon">📋</div>
+      <h3 class="action-title">Liste Complète</h3>
+      <p class="action-description"></p>
+    </div>
+
+    <!-- Admin-only Dashboard Card -->
+    <div *ngIf="isAdmin" class="action-card" routerLink="/secure/dashboard">
+      <div class="action-icon">📊</div>
+      <h3 class="action-title">Dashboard</h3>
+      <p class="action-description">Vue d'ensemble admin</p>
+    </div>
+  </div>
+
+  <!-- Logout Button -->
+  <div class="menu-footer">
+    <p class="user-info">Connecté en tant que: <strong>{{ username }} ({{ role || 'Invité' }})</strong></p>
+    <button class="logout-button" (click)="onLogout()">Déconnexion</button>
+  </div>
+</div>

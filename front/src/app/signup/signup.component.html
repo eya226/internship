@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="login-box">
+    <div class="login-header">
+      <img src="assets/log.png" alt="Logo" class="logo">
+      <h1>Créer un compte</h1>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" 
+               id="username" 
+               formControlName="username" 
+               placeholder="Choisissez un nom d'utilisateur"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" 
+               id="password" 
+               formControlName="password" 
+               placeholder="Créez un mot de passe"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rôle</label>
+        <select id="role" formControlName="role" class="form-select">
+          <option value="User">Utilisateur</option>
+          <option value="Admin">Administrateur</option>
+        </select>
+      </div>
+
+      <!-- Form validation error -->
+      <div *ngIf="signupForm.invalid && signupForm.touched" class="error-message">
+        <span class="error-icon">!</span>
+        <span>Veuillez remplir tous les champs obligatoires</span>
+      </div>
+
+      <!-- Username exists error -->
+      <div *ngIf="usernameExistsError" class="error-message">
+        <span class="error-icon">!</span>
+        <span>Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.</span>
+      </div>
+
+      <button type="submit" [disabled]="signupForm.invalid || isLoading" class="login-button">
+        <span *ngIf="!isLoading">S'inscrire</span>
+        <span *ngIf="isLoading" class="loading-spinner"></span>
+      </button>
+
+      <div class="login-footer">
+        <p>Déjà un compte ? <a routerLink="/login" class="signup-link">Se connecter</a></p>
+      </div>
+    </form>
+  </div>
+</div>

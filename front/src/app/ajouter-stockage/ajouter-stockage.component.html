@@ -1,0 +1,93 @@
+
+<div class="stock-registration-container">
+  <!-- Header -->
+  <div class="header-section">
+    <h1 class="main-title">➕ ENREGISTREMENT DE STOCK</h1>
+    <div class="blue-divider"></div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="navigation-section">
+    <button routerLink="/secure/liste" class="nav-button back-button">← Retour à la liste</button>
+    <button routerLink="/secure/menu" class="nav-button home-button">🏠 Accueil</button>
+  </div>
+
+  <!-- Form -->
+  <div class="form-card">
+    <h2 class="form-title">📝 Nouvel enregistrement</h2>
+
+    <form [formGroup]="stockForm" (submit)="$event.preventDefault()" class="stock-form">
+      <!-- Code Plan Field -->
+      <div class="form-group">
+        <label class="input-label">Code Plan</label>
+        <input type="text"
+               formControlName="codeComplet"
+               placeholder="Entrez les 14 caractères du code plan"
+               class="form-input"
+               [class.is-invalid]="f['codeComplet'].invalid && f['codeComplet'].touched">
+
+        <!-- Validation Messages -->
+        <div *ngIf="f['codeComplet'].invalid && f['codeComplet'].touched" class="error-message">
+          <div *ngIf="f['codeComplet'].errors?.['required']">Ce champ est obligatoire</div>
+          <div *ngIf="f['codeComplet'].errors?.['minlength'] || f['codeComplet'].errors?.['maxlength']">
+            Le code doit faire exactement 14 caractères
+          </div>
+        </div>
+
+        <!-- Duplicate Warning -->
+        <div *ngIf="duplicateMessage" class="duplicate-warning bg-yellow-100 text-yellow-800 p-3 rounded mt-2">
+          {{ duplicateMessage }}
+        </div>
+      </div>
+
+      <!-- Code Baguette Field -->
+      <div class="form-group">
+        <label class="input-label">Code Baguette</label>
+        <input type="text"
+               formControlName="emplacement"
+               placeholder="Entrez le code baguette"
+               class="form-input"
+               [class.is-invalid]="f['emplacement'].invalid && f['emplacement'].touched">
+
+        <!-- Validation Messages -->
+        <div *ngIf="f['emplacement'].invalid && f['emplacement'].touched" class="error-message">
+          <div *ngIf="f['emplacement'].errors?.['required']">Ce champ est obligatoire</div>
+          <div *ngIf="f['emplacement'].errors?.['minlength']">
+            Minimum 2 caractères requis
+          </div>
+        </div>
+      </div>
+
+      <!-- Station Field -->
+      <div class="form-group">
+        <label class="input-label">Station</label>
+        <select formControlName="station"
+                class="form-input"
+                [class.is-invalid]="f['station'].invalid && f['station'].touched">
+          <option value="">Sélectionnez une station</option>
+          <option value="STATION_1">Station 1</option>
+          <option value="STATION_2">Station 2</option>
+          <option value="DELIVERED">Livré</option>
+        </select>
+
+        <!-- Validation Messages -->
+        <div *ngIf="f['station'].invalid && f['station'].touched" class="error-message">
+          <div *ngIf="f['station'].errors?.['required']">Ce champ est obligatoire</div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+              [disabled]="stockForm.invalid || duplicateFound"
+              class="submit-button"
+              (click)="onSubmit()">
+        {{ isLoading ? 'Enregistrement en cours...' : 'Enregistrer' }}
+      </button>
+    </form>
+  </div>
+</div>
+
+  <!-- Footer -->
+  <div class="footer-section">
+    <p class="footer-text">© 2025 EMDEP. Tous droits réservés.</p>
+  </div>
