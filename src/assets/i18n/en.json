@@ -1,0 +1,25 @@
+{
+  "login": {
+    "title": "Login",
+    "username": "Username",
+    "username_placeholder": "Enter your username",
+    "password": "Password",
+    "password_placeholder": "Enter your password",
+    "remember_me": "Remember me",
+    "form_error": "Please fill in all required fields",
+    "connect_button": "Login",
+    "forgot_password": "Forgot password?",
+    "no_account": "Don't have an account yet?",
+    "signup": "Sign up"
+  },
+  "signup": {
+    "title": "Create an account",
+    "username_placeholder": "Choose a username",
+    "password_placeholder": "Create a password",
+    "role": "Role",
+    "role_user": "User",
+    "role_admin": "Administrator",
+    "username_exists_error": "This username is already taken. Please choose another one.",
+    "already_account": "Already have an account?"
+  }
+}

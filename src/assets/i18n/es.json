@@ -1,0 +1,25 @@
+{
+  "login": {
+    "title": "Iniciar sesión",
+    "username": "Nombre de usuario",
+    "username_placeholder": "Ingrese su nombre de usuario",
+    "password": "Contraseña",
+    "password_placeholder": "Ingrese su contraseña",
+    "remember_me": "Recuérdame",
+    "form_error": "Por favor, rellene todos los campos obligatorios",
+    "connect_button": "Iniciar sesión",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "no_account": "¿Aún no tienes una cuenta?",
+    "signup": "Registrarse"
+  },
+  "signup": {
+    "title": "Crear una cuenta",
+    "username_placeholder": "Elige un nombre de usuario",
+    "password_placeholder": "Crear una contraseña",
+    "role": "Rol",
+    "role_user": "Usuario",
+    "role_admin": "Administrador",
+    "username_exists_error": "Este nombre de usuario ya está en uso. Por favor, elija otro.",
+    "already_account": "¿Ya tienes una cuenta?"
+  }
+}
