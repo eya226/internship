@@ -15,7 +15,7 @@ export interface StockOT {
   providedIn: 'root'
 })
 export class StockageServiceService {
-  private apiUrl = 'https://localhost:7036/api/StockOT';
+  private apiUrl = 'http://localhost:5146/api/StockOT';
 
   constructor(private http: HttpClient) {}
 
