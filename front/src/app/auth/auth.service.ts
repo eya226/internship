@@ -13,7 +13,7 @@ import { SignUpRequest } from '../models/signup-request.model';
 })
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
-  private readonly API_URL = 'http://localhost:5146/auth';
+  private readonly API_URL = 'https://localhost:7036/auth';
 
   constructor(private http: HttpClient, private router: Router) {}
 
