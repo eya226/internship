@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe } from '@angular/common';
 
 import { MatBadgeModule } from '@angular/material/badge';
@@ -55,6 +56,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
     TranslateModule,
     RouterModule.forChild([
       { path: '', redirectTo: 'menu', pathMatch: 'full' },
