@@ -75,6 +75,8 @@ export class DashboardComponent implements OnInit {
     lightAccent: 'rgba(255, 125, 0, 0.08)'
   };
 
+  predefinedColors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF'];
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -204,12 +206,8 @@ export class DashboardComponent implements OnInit {
 
   generateColor(emplacement: string): string {
     if (!this.bagetColors[emplacement]) {
-      const hash = emplacement.split('').reduce((a, b) => {
-        a = ((a << 5) - a) + b.charCodeAt(0);
-        return a & a;
-      }, 0);
-      const hue = Math.abs(hash) % 360;
-      this.bagetColors[emplacement] = `hsl(${hue}, 70%, 60%)`;
+      const bagetIndex = this.bagets.findIndex(b => b.emplacement === emplacement);
+      this.bagetColors[emplacement] = this.predefinedColors[bagetIndex % this.predefinedColors.length];
     }
     return this.bagetColors[emplacement];
   }

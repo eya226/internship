@@ -46,6 +46,7 @@ export class AuthService {
     if (!token) return '';
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log('Token Payload:', payload);
       return payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || '';
     } catch (e) {
       console.error('Failed to decode token', e);
@@ -63,6 +64,7 @@ export class AuthService {
     if (!token) return '';
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log('Token Payload:', payload);
       return payload.username || payload.sub || 'Utilisateur';
     } catch (e) {
       return 'Utilisateur';
