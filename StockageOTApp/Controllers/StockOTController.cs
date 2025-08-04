@@ -141,5 +141,16 @@ namespace StockageOTApp.Controllers
             
             return Ok(counts);
         }
+
+        [HttpGet("stuck-items")]
+        public IActionResult GetStuckItems([FromQuery] int min = 15)
+        {
+            var stuckTime = DateTime.Now.AddMinutes(-min);
+            var stuckItems = _context.StockOTs
+                .Where(x => x.Station != "DELIVERED" && x.DateEnregistrement < stuckTime)
+                .ToList();
+
+            return Ok(stuckItems);
+        }
     }
 }

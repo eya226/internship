@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { StockageServiceService, StockOT } from '../stockage-service.service';
 import { DatePipe } from '@angular/common';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-dashboard',
@@ -63,6 +65,17 @@ export class DashboardComponent implements OnInit {
   recentActivity: any[] = [];
   alerts: any[] = [];
 
+  // Journey Replay
+  isReplaying = false;
+  replayData: StockOT[] = [];
+  replayIndex = 0;
+  replayInterval: any;
+  replaySpeed = 500;
+
+  // Heatmap
+  stuckItems: StockOT[] = [];
+  stuckItemsInterval: any;
+
   brandColors = {
     primary: '#005f87',
     secondary: '#00a1e0',
@@ -89,7 +102,13 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/secure/enregistrement']);
     }
     this.loadData();
+    this.loadStuckItems();
+    this.stuckItemsInterval = setInterval(() => this.loadStuckItems(), 30000);
     setInterval(() => this.pulseAlert = !this.pulseAlert, 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.stuckItemsInterval);
   }
 
   loadData(): void {
@@ -384,5 +403,104 @@ export class DashboardComponent implements OnInit {
       if (baget.station === 'DELIVERED') return 'moving-to-station1';
     }
     return '';
+  }
+
+  exportStuckItemsAsPDF(): void {
+    const doc = new jsPDF();
+    const tableColumn = ["Emplacement", "Item Count", "Time in Station (min)"];
+    const tableRows: any[] = [];
+
+    this.stuckItems.forEach(item => {
+      const itemData = [
+        item.emplacement,
+        this.getBagetItemCount(item.emplacement),
+        this.getTimeInStation(item).toFixed(2)
+      ];
+      tableRows.push(itemData);
+    });
+
+    (doc as any).autoTable(tableColumn, tableRows, { startY: 20 });
+    doc.text("Stuck Items", 14, 15);
+    doc.save('stuck-items.pdf');
+  }
+
+  loadStuckItems(): void {
+    this.stockageService.getStuckItems().subscribe({
+      next: (data) => {
+        this.stuckItems = data;
+      },
+      error: () => {
+        // Handle error silently for auto-refresh
+      }
+    });
+  }
+
+  getUrgencyClass(item: StockOT): string {
+    const minutes = this.getTimeInStation(item);
+    if (minutes > 15) return 'urgency-red';
+    if (minutes > 10) return 'urgency-yellow';
+    return 'urgency-green';
+  }
+
+  getTimeInStation(item: StockOT): number {
+    const now = new Date();
+    const itemDate = new Date(item.dateEnregistrement);
+    return (now.getTime() - itemDate.getTime()) / 60000;
+  }
+
+  journeyReplay(): void {
+    if (!this.selectedBaget) return;
+
+    this.stockageService.getByEmplacement(this.selectedBaget).subscribe({
+      next: (data) => {
+        this.replayData = data;
+        this.isReplaying = true;
+        this.replayIndex = 0;
+        this.startReplay();
+      },
+      error: () => {
+        this.errorMessage = 'Échec du chargement de l\'historique du bagget';
+      }
+    });
+  }
+
+  startReplay(): void {
+    this.replayInterval = setInterval(() => {
+      if (this.replayIndex < this.replayData.length) {
+        const item = this.replayData[this.replayIndex];
+        const baget = this.bagets.find(b => b.emplacement === item.emplacement);
+        if (baget) {
+          baget.station = item.station;
+        }
+        this.replayIndex++;
+      } else {
+        this.stopReplay();
+      }
+    }, this.replaySpeed);
+  }
+
+  pauseReplay(): void {
+    clearInterval(this.replayInterval);
+  }
+
+  restartReplay(): void {
+    this.stopReplay();
+    this.journeyReplay();
+  }
+
+  stopReplay(): void {
+    clearInterval(this.replayInterval);
+    this.isReplaying = false;
+    this.replayData = [];
+    this.replayIndex = 0;
+    this.loadData(); // Reload original data
+  }
+
+  setReplaySpeed(speed: number): void {
+    this.replaySpeed = speed;
+    if (this.isReplaying) {
+      this.pauseReplay();
+      this.startReplay();
+    }
   }
 }

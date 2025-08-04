@@ -198,6 +198,10 @@
             <mat-icon>arrow_forward</mat-icon>
             {{ 'dashboard.move_to' | translate }} {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' : ('dashboard.delivered' | translate)}}
           </button>
+          <button mat-stroked-button (click)="journeyReplay()" class="action-button">
+            <mat-icon>play_arrow</mat-icon>
+            Play Journey
+          </button>
           <button mat-stroked-button color="accent" 
                   *ngIf="getSelectedBagetStation() === 'DELIVERED' && !isBagetMoving(selectedBaget)"
                   (click)="returnToStation1(selectedBaget || '')" class="action-button">
@@ -211,7 +215,7 @@
           </button>
         </div>
 
-        <div class="timeline">
+        <div class="timeline" *ngIf="!isReplaying">
           <h3>{{ 'dashboard.movement_history' | translate }}</h3>
           <div class="timeline-scroll-container">
             <div class="timeline-item" *ngFor="let item of getBagetItems(selectedBaget)">
@@ -228,6 +232,45 @@
                   <span class="item-status" *ngIf="isItemStuck(item)" [@pulse]="pulseAlert">
                     ⚠️ {{ 'dashboard.stuck' | translate }}
                   </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-replay" *ngIf="isReplaying">
+          <h3>Journey Replay</h3>
+          <div class="replay-controls">
+            <button mat-icon-button (click)="pauseReplay()">
+              <mat-icon>pause</mat-icon>
+            </button>
+            <button mat-icon-button (click)="startReplay()">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+            <button mat-icon-button (click)="restartReplay()">
+              <mat-icon>replay</mat-icon>
+            </button>
+            <mat-form-field>
+              <mat-label>Speed</mat-label>
+              <mat-select (selectionChange)="setReplaySpeed($event.value)">
+                <mat-option [value]="1000">1x</mat-option>
+                <mat-option [value]="500">2x</mat-option>
+                <mat-option [value]="250">4x</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="timeline-scroll-container">
+            <div class="timeline-item" *ngFor="let item of replayData; let i = index" [class.active]="i === replayIndex - 1">
+              <div class="timeline-badge" [style.background-color]="bagetColors[selectedBaget || '']"></div>
+              <div class="timeline-content">
+                <div class="timeline-time">{{item.dateEnregistrement | date:'medium'}}</div>
+                <div class="timeline-event">
+                  <span class="station" [class.station-1]="item.station === 'STATION_1'"
+                        [class.station-2]="item.station === 'STATION_2'"
+                        [class.station-3]="item.station === 'DELIVERED'">
+                    {{getStationName(item.station)}}
+                  </span>
+                  <span class="item-code">{{item.codeComplet}}</span>
                 </div>
               </div>
             </div>
@@ -376,6 +419,30 @@
                 </div>
               </div>
             </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Live Bottleneck Monitor -->
+      <mat-card class="analytics-card bottleneck-card">
+        <mat-card-header>
+          <mat-card-title>Live Bottleneck Monitor</mat-card-title>
+          <button mat-icon-button (click)="exportStuckItemsAsPDF()" matTooltip="Export as PDF">
+            <mat-icon>picture_as_pdf</mat-icon>
+          </button>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="bottleneck-grid">
+            <div *ngFor="let item of stuckItems" class="bottleneck-item" [ngClass]="getUrgencyClass(item)"
+                 [matTooltip]="'Item: ' + item.codeComplet + '\nStation: ' + getStationName(item.station) + '\nDate: ' + (item.dateEnregistrement | date:'short')">
+              <div class="item-id">{{item.emplacement}}</div>
+              <div class="item-count">{{getBagetItemCount(item.emplacement)}} items</div>
+              <div class="item-time">{{getTimeInStation(item) | number:'1.0-0'}} min</div>
+              <button mat-stroked-button (click)="moveToNextStation(item.emplacement)">Move Now</button>
+            </div>
+          </div>
+          <div *ngIf="stuckItems.length === 0" class="no-alerts">
+            <p>No bottlenecks detected.</p>
           </div>
         </mat-card-content>
       </mat-card>
