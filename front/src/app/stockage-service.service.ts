@@ -112,4 +112,13 @@ export class StockageServiceService {
       })
     );
   }
+
+  getStuckItems(min: number = 15): Observable<StockOT[]> {
+    return this.http.get<StockOT[]>(`${this.apiUrl}/stuck-items?min=${min}`).pipe(
+      catchError(err => {
+        console.error('Erreur de chargement des articles bloqués:', err);
+        return throwError(() => new Error('Échec du chargement des articles bloqués'));
+      })
+    );
+  }
 }

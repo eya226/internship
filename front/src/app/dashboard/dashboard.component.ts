@@ -426,7 +426,7 @@ export class DashboardComponent implements OnInit {
 
   loadStuckItems(): void {
     this.stockageService.getStuckItems().subscribe({
-      next: (data) => {
+      next: (data: StockOT[]) => {
         this.stuckItems = data;
       },
       error: () => {
