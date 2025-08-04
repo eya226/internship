@@ -1,36 +1,35 @@
-
 <div class="stock-registration-container">
   <!-- Header -->
   <div class="header-section">
-    <h1 class="main-title">➕ ENREGISTREMENT DE STOCK</h1>
+    <h1 class="main-title">➕ {{ 'add_stock.title' | translate }}</h1>
     <div class="blue-divider"></div>
   </div>
 
   <!-- Navigation -->
   <div class="navigation-section">
-    <button routerLink="/secure/liste" class="nav-button back-button">← Retour à la liste</button>
-    <button routerLink="/secure/menu" class="nav-button home-button">🏠 Accueil</button>
+    <button routerLink="/secure/liste" class="nav-button back-button">{{ 'add_stock.back_to_list' | translate }}</button>
+    <button routerLink="/secure/menu" class="nav-button home-button">{{ 'add_stock.home' | translate }}</button>
   </div>
 
   <!-- Form -->
   <div class="form-card">
-    <h2 class="form-title">📝 Nouvel enregistrement</h2>
+    <h2 class="form-title">📝 {{ 'add_stock.new_entry' | translate }}</h2>
 
     <form [formGroup]="stockForm" (submit)="$event.preventDefault()" class="stock-form">
       <!-- Code Plan Field -->
       <div class="form-group">
-        <label class="input-label">Code Plan</label>
+        <label class="input-label">{{ 'add_stock.code_plan' | translate }}</label>
         <input type="text"
                formControlName="codeComplet"
-               placeholder="Entrez les 14 caractères du code plan"
+               [placeholder]="'add_stock.code_plan_placeholder' | translate"
                class="form-input"
                [class.is-invalid]="f['codeComplet'].invalid && f['codeComplet'].touched">
 
         <!-- Validation Messages -->
         <div *ngIf="f['codeComplet'].invalid && f['codeComplet'].touched" class="error-message">
-          <div *ngIf="f['codeComplet'].errors?.['required']">Ce champ est obligatoire</div>
+          <div *ngIf="f['codeComplet'].errors?.['required']">{{ 'add_stock.field_required' | translate }}</div>
           <div *ngIf="f['codeComplet'].errors?.['minlength'] || f['codeComplet'].errors?.['maxlength']">
-            Le code doit faire exactement 14 caractères
+            {{ 'add_stock.code_plan_length_error' | translate }}
           </div>
         </div>
 
@@ -42,37 +41,37 @@
 
       <!-- Code Baguette Field -->
       <div class="form-group">
-        <label class="input-label">Code Baguette</label>
+        <label class="input-label">{{ 'add_stock.code_baguette' | translate }}</label>
         <input type="text"
                formControlName="emplacement"
-               placeholder="Entrez le code baguette"
+               [placeholder]="'add_stock.code_baguette_placeholder' | translate"
                class="form-input"
                [class.is-invalid]="f['emplacement'].invalid && f['emplacement'].touched">
 
         <!-- Validation Messages -->
         <div *ngIf="f['emplacement'].invalid && f['emplacement'].touched" class="error-message">
-          <div *ngIf="f['emplacement'].errors?.['required']">Ce champ est obligatoire</div>
+          <div *ngIf="f['emplacement'].errors?.['required']">{{ 'add_stock.field_required' | translate }}</div>
           <div *ngIf="f['emplacement'].errors?.['minlength']">
-            Minimum 2 caractères requis
+            {{ 'add_stock.code_baguette_length_error' | translate }}
           </div>
         </div>
       </div>
 
       <!-- Station Field -->
       <div class="form-group">
-        <label class="input-label">Station</label>
+        <label class="input-label">{{ 'add_stock.station' | translate }}</label>
         <select formControlName="station"
                 class="form-input"
                 [class.is-invalid]="f['station'].invalid && f['station'].touched">
-          <option value="">Sélectionnez une station</option>
-          <option value="STATION_1">Station 1</option>
-          <option value="STATION_2">Station 2</option>
-          <option value="DELIVERED">Livré</option>
+          <option value="">{{ 'add_stock.select_station' | translate }}</option>
+          <option value="STATION_1">{{ 'add_stock.station_1' | translate }}</option>
+          <option value="STATION_2">{{ 'add_stock.station_2' | translate }}</option>
+          <option value="DELIVERED">{{ 'add_stock.delivered' | translate }}</option>
         </select>
 
         <!-- Validation Messages -->
         <div *ngIf="f['station'].invalid && f['station'].touched" class="error-message">
-          <div *ngIf="f['station'].errors?.['required']">Ce champ est obligatoire</div>
+          <div *ngIf="f['station'].errors?.['required']">{{ 'add_stock.field_required' | translate }}</div>
         </div>
       </div>
 
@@ -81,7 +80,7 @@
               [disabled]="stockForm.invalid || duplicateFound"
               class="submit-button"
               (click)="onSubmit()">
-        {{ isLoading ? 'Enregistrement en cours...' : 'Enregistrer' }}
+        {{ isLoading ? ('add_stock.saving' | translate) : ('add_stock.save' | translate) }}
       </button>
     </form>
   </div>
@@ -89,5 +88,5 @@
 
   <!-- Footer -->
   <div class="footer-section">
-    <p class="footer-text">© 2025 EMDEP. Tous droits réservés.</p>
+    <p class="footer-text">{{ 'add_stock.footer' | translate }}</p>
   </div>

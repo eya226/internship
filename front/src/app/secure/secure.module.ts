@@ -26,6 +26,7 @@ import { ModifyDialogComponent } from '../modify-dialog/modify-dialog.component'
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { OrderByPipe } from '../pipes/order-by.pipe';
 import { AuthGuard } from '../auth/auth.guard';
+import { AdminGuard } from '../auth/admin.guard';
 
 @NgModule({
   declarations: [
@@ -62,8 +63,7 @@ import { AuthGuard } from '../auth/auth.guard';
       { 
         path: 'dashboard', 
         component: DashboardComponent,
-        canActivate: [AuthGuard],
-        data: { roles: ['Admin'] }
+        canActivate: [AdminGuard]
       },
       { path: '**', redirectTo: 'menu' }
     ])

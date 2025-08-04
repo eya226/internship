@@ -7,13 +7,13 @@
           <img src="assets/emdep-logo.png" alt="Logo EMDEP" class="navbar-logo">
         </div>
         <div class="navbar-titles">
-          <h1 class="navbar-title">Tableau de bord logistique EMDEP</h1>
-          <p class="navbar-subtitle">Suivi des baggets en temps réel</p>
+          <h1 class="navbar-title">{{ 'dashboard.title' | translate }}</h1>
+          <p class="navbar-subtitle">{{ 'dashboard.subtitle' | translate }}</p>
         </div>
       </div>
       
       <div class="navbar-actions">
-        <button mat-icon-button class="notification-btn" (click)="toggleAlertPanel()" matTooltip="Notifications">
+        <button mat-icon-button class="notification-btn" (click)="toggleAlertPanel()" [matTooltip]="'dashboard.notifications' | translate">
           <div class="notification-icon-container">
             <mat-icon>notifications</mat-icon>
             <span class="notification-badge" *ngIf="alertCount > 0">{{alertCount}}</span>
@@ -24,7 +24,7 @@
     
     <div class="alert-panel" *ngIf="showAlertPanel" @slideIn>
       <div class="alert-panel-header">
-        <h3>Alertes et notifications</h3>
+        <h3>{{ 'dashboard.alerts_and_notifications' | translate }}</h3>
         <button mat-icon-button (click)="toggleAlertPanel()">
           <mat-icon>close</mat-icon>
         </button>
@@ -32,7 +32,7 @@
       <div *ngIf="alerts.length === 0" class="no-alerts">
         <div class="no-alerts-content">
           <mat-icon>check_circle</mat-icon>
-          <p>Aucune alerte active</p>
+          <p>{{ 'dashboard.no_active_alerts' | translate }}</p>
         </div>
       </div>
       <div class="alert-items-container">
@@ -61,7 +61,7 @@
             {{tab === 'map' ? 'map' : tab === 'bagets' ? 'view_list' : 'insights'}}
           </mat-icon>
           <span class="tab-label">
-            {{tab === 'map' ? 'Carte' : tab === 'bagets' ? 'Baggets' : 'Analytique'}}
+            {{tab === 'map' ? ('dashboard.map' | translate) : tab === 'bagets' ? ('dashboard.bagets' | translate) : ('dashboard.analytics' | translate)}}
           </span>
         </div>
         <div class="tab-indicator" [class.active]="activeTab === tab"></div>
@@ -73,7 +73,7 @@
   <div *ngIf="loading" class="loading-state">
     <div class="loading-content">
       <mat-spinner diameter="48" strokeWidth="4"></mat-spinner>
-      <p>Chargement des données logistiques...</p>
+      <p>{{ 'dashboard.loading' | translate }}</p>
     </div>
   </div>
 
@@ -81,7 +81,7 @@
     <div class="error-content">
       <mat-icon color="warn">error_outline</mat-icon>
       <p>{{errorMessage}}</p>
-      <button mat-stroked-button color="warn" (click)="loadData()">Réessayer</button>
+      <button mat-stroked-button color="warn" (click)="loadData()">{{ 'dashboard.retry' | translate }}</button>
     </div>
   </div>
 
@@ -90,7 +90,7 @@
     <div class="map-controls">
       <button mat-stroked-button (click)="toggleMapSize()" class="map-control-button">
         <mat-icon>{{mapExpanded ? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
-        {{mapExpanded ? 'Réduire' : 'Agrandir'}} la carte
+        {{mapExpanded ? ('dashboard.reduce' | translate) : ('dashboard.enlarge' | translate)}} la carte
       </button>
     </div>
 
@@ -110,11 +110,11 @@
           <div class="station-metrics">
             <div class="metric">
               <span class="value">{{getStationCount('STATION_1')}}</span>
-              <span class="label">Articles</span>
+              <span class="label">{{ 'dashboard.items' | translate }}</span>
             </div>
             <div class="metric">
               <span class="value">{{getBagetCount('STATION_1')}}</span>
-              <span class="label">Baggets</span>
+              <span class="label">{{ 'dashboard.bagets' | translate }}</span>
             </div>
           </div>
         </div>
@@ -126,11 +126,11 @@
           <div class="station-metrics">
             <div class="metric">
               <span class="value">{{getStationCount('STATION_2')}}</span>
-              <span class="label">Articles</span>
+              <span class="label">{{ 'dashboard.items' | translate }}</span>
             </div>
             <div class="metric">
               <span class="value">{{getBagetCount('STATION_2')}}</span>
-              <span class="label">Baggets</span>
+              <span class="label">{{ 'dashboard.bagets' | translate }}</span>
             </div>
           </div>
         </div>
@@ -142,11 +142,11 @@
           <div class="station-metrics">
             <div class="metric">
               <span class="value">{{getStationCount('DELIVERED')}}</span>
-              <span class="label">Articles</span>
+              <span class="label">{{ 'dashboard.items' | translate }}</span>
             </div>
             <div class="metric">
               <span class="value">{{getBagetCount('DELIVERED')}}</span>
-              <span class="label">Baggets</span>
+              <span class="label">{{ 'dashboard.bagets' | translate }}</span>
             </div>
           </div>
         </div>
@@ -173,9 +173,9 @@
            [style.top]="tooltipPosition.y + 'px'">
         <h4>{{hoveredBaget.emplacement}}</h4>
         <div class="tooltip-content">
-          <p><strong>Station actuelle:</strong> {{getStationName(hoveredBaget.station)}}</p>
-          <p><strong>Articles:</strong> {{getBagetItemCount(hoveredBaget.emplacement)}}</p>
-          <p><strong>Statut:</strong> {{hoveredBaget.moving ? 'En mouvement' : 'Stationnaire'}}</p>
+          <p><strong>{{ 'dashboard.current_station' | translate }}</strong> {{getStationName(hoveredBaget.station)}}</p>
+          <p><strong>{{ 'dashboard.items' | translate }}:</strong> {{getBagetItemCount(hoveredBaget.emplacement)}}</p>
+          <p><strong>{{ 'dashboard.status' | translate }}:</strong> {{hoveredBaget.moving ? ('dashboard.moving' | translate) : ('dashboard.stationary' | translate)}}</p>
         </div>
       </div>
 
@@ -183,7 +183,7 @@
       <div class="baget-details" *ngIf="selectedBaget" @slideIn>
         <div class="panel-header">
           <div class="panel-header-content">
-            <h2>Détails du bagget: {{selectedBaget}}</h2>
+            <h2>{{ 'dashboard.baget_details' | translate }} {{selectedBaget}}</h2>
             <div class="baget-color" [style.background-color]="bagetColors[selectedBaget || '']"></div>
           </div>
           <button mat-icon-button class="close-btn" (click)="selectedBaget = null">
@@ -196,23 +196,23 @@
                   *ngIf="getSelectedBagetStation() !== 'DELIVERED' && !isBagetMoving(selectedBaget)"
                   (click)="moveToNextStation(selectedBaget || '')" class="action-button">
             <mat-icon>arrow_forward</mat-icon>
-            Déplacer vers {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' : 'Livré'}}
+            {{ 'dashboard.move_to' | translate }} {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' : ('dashboard.delivered' | translate)}}
           </button>
           <button mat-stroked-button color="accent" 
                   *ngIf="getSelectedBagetStation() === 'DELIVERED' && !isBagetMoving(selectedBaget)"
                   (click)="returnToStation1(selectedBaget || '')" class="action-button">
             <mat-icon>replay</mat-icon>
-            Retour à la Station 1
+            {{ 'dashboard.return_to_station_1' | translate }}
           </button>
           <button mat-stroked-button color="warn" *ngIf="isBagetMoving(selectedBaget)" disabled class="action-button">
             <mat-icon>hourglass_top</mat-icon>
-            En mouvement vers {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' : 
-                       getSelectedBagetStation() === 'STATION_2' ? 'Livré' : 'Station 1'}}
+            {{ 'dashboard.moving_to' | translate }} {{getSelectedBagetStation() === 'STATION_1' ? 'Station 2' :
+                       getSelectedBagetStation() === 'STATION_2' ? ('dashboard.delivered' | translate) : 'Station 1'}}
           </button>
         </div>
 
         <div class="timeline">
-          <h3>Historique des mouvements</h3>
+          <h3>{{ 'dashboard.movement_history' | translate }}</h3>
           <div class="timeline-scroll-container">
             <div class="timeline-item" *ngFor="let item of getBagetItems(selectedBaget)">
               <div class="timeline-badge" [style.background-color]="bagetColors[selectedBaget || '']"></div>
@@ -226,7 +226,7 @@
                   </span>
                   <span class="item-code">{{item.codeComplet}}</span>
                   <span class="item-status" *ngIf="isItemStuck(item)" [@pulse]="pulseAlert">
-                    ⚠️ Bloqué
+                    ⚠️ {{ 'dashboard.stuck' | translate }}
                   </span>
                 </div>
               </div>
@@ -241,19 +241,19 @@
   <div class="tab-content" *ngIf="activeTab === 'bagets' && !loading && !errorMessage" @fadeIn>
     <div class="baget-list-container">
       <div class="section-header">
-        <h2>Tous les baggets</h2>
+        <h2>{{ 'dashboard.all_bagets' | translate }}</h2>
         <div class="baget-stats">
           <div class="stat-item">
             <span class="stat-value">{{bagets.length}}</span>
-            <span class="stat-label">Total</span>
+            <span class="stat-label">{{ 'dashboard.total' | translate }}</span>
           </div>
           <div class="stat-item">
             <span class="stat-value">{{stuckBagets.length}}</span>
-            <span class="stat-label">Bloqués</span>
+            <span class="stat-label">{{ 'dashboard.stuck_bagets' | translate }}</span>
           </div>
           <div class="stat-item">
             <span class="stat-value">{{fullBagets.length}}</span>
-            <span class="stat-label">Pleins</span>
+            <span class="stat-label">{{ 'dashboard.full_bagets' | translate }}</span>
           </div>
         </div>
       </div>
@@ -265,8 +265,8 @@
           <mat-card-header>
             <mat-card-title>{{baget.emplacement}}</mat-card-title>
             <mat-card-subtitle>
-              {{getStationName(baget.station)}} • {{getBagetItemCount(baget.emplacement)}} articles
-              <span *ngIf="baget.moving">(En mouvement)</span>
+              {{getStationName(baget.station)}} • {{getBagetItemCount(baget.emplacement)}} {{ 'dashboard.articles_label' | translate }}
+              <span *ngIf="baget.moving">{{ 'dashboard.in_movement' | translate }}</span>
             </mat-card-subtitle>
           </mat-card-header>
           
@@ -287,8 +287,8 @@
       <!-- Station Utilization Card -->
       <mat-card class="analytics-card utilization-card">
         <mat-card-header>
-          <mat-card-title>Utilisation des stations</mat-card-title>
-          <mat-card-subtitle>Répartition des articles entre les stations</mat-card-subtitle>
+          <mat-card-title>{{ 'dashboard.station_utilization' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'dashboard.item_distribution' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div *ngFor="let stat of stationCounts" class="utilization-item">
@@ -304,7 +304,7 @@
                 <span class="percent">{{(stat.count / (stockData.length || 1)) * 100 | number:'1.0-0'}}%</span>
               </div>
             </div>
-            <div class="count">{{stat.count}} articles</div>
+            <div class="count">{{stat.count}} {{ 'dashboard.articles_label' | translate }}</div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -312,8 +312,8 @@
       <!-- System Overview Card -->
       <mat-card class="analytics-card overview-card">
         <mat-card-header>
-          <mat-card-title>Aperçu du système</mat-card-title>
-          <mat-card-subtitle>Statistiques globales</mat-card-subtitle>
+          <mat-card-title>{{ 'dashboard.system_overview' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'dashboard.global_stats' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="analytics-grid">
@@ -321,33 +321,33 @@
               <div class="widget-icon-container" [style.background-color]="brandColors.lightPrimary">
                 <mat-icon [style.color]="brandColors.primary">inventory</mat-icon>
               </div>
-              <h3 class="widget-title">Total articles</h3>
+              <h3 class="widget-title">{{ 'dashboard.total_items' | translate }}</h3>
               <div class="widget-value">{{totalItems}}</div>
-              <div class="widget-subtext">Toutes stations</div>
+              <div class="widget-subtext">{{ 'dashboard.all_stations' | translate }}</div>
             </div>
             <div class="analytics-widget">
               <div class="widget-icon-container" [style.background-color]="brandColors.lightSecondary">
                 <mat-icon [style.color]="brandColors.secondary">local_shipping</mat-icon>
               </div>
-              <h3 class="widget-title">Baggets actifs</h3>
+              <h3 class="widget-title">{{ 'dashboard.active_bagets' | translate }}</h3>
               <div class="widget-value">{{bagets.length}}</div>
-              <div class="widget-subtext">En circulation</div>
+              <div class="widget-subtext">{{ 'dashboard.in_circulation' | translate }}</div>
             </div>
             <div class="analytics-widget">
               <div class="widget-icon-container" [style.background-color]="brandColors.lightAccent">
                 <mat-icon [style.color]="brandColors.accent">analytics</mat-icon>
               </div>
-              <h3 class="widget-title">Moy. articles/bagget</h3>
+              <h3 class="widget-title">{{ 'dashboard.avg_items_per_baget' | translate }}</h3>
               <div class="widget-value">{{averageItemsPerBaget}}</div>
-              <div class="widget-subtext">Moyenne actuelle</div>
+              <div class="widget-subtext">{{ 'dashboard.current_average' | translate }}</div>
             </div>
             <div class="analytics-widget">
               <div class="widget-icon-container" [style.background-color]="brandColors.lightPrimary">
                 <mat-icon [style.color]="brandColors.primary">done_all</mat-icon>
               </div>
-              <h3 class="widget-title">Taux de livraison</h3>
+              <h3 class="widget-title">{{ 'dashboard.delivery_rate' | translate }}</h3>
               <div class="widget-value">{{ (getStationCount('DELIVERED') / (totalItems || 1)) * 100 | number:'1.0-0' }}%</div>
-              <div class="widget-subtext">Articles livrés</div>
+              <div class="widget-subtext">{{ 'dashboard.delivered_items' | translate }}</div>
             </div>
           </div>
         </mat-card-content>
@@ -356,8 +356,8 @@
       <!-- Recent Activity Card -->
       <mat-card class="analytics-card activity-card">
         <mat-card-header>
-          <mat-card-title>Activité récente</mat-card-title>
-          <mat-card-subtitle>Derniers mouvements enregistrés</mat-card-subtitle>
+          <mat-card-title>{{ 'dashboard.recent_activity' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'dashboard.last_movements' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="activity-scroll-container">
@@ -383,14 +383,14 @@
       <!-- Alerts Card -->
       <mat-card class="analytics-card alerts-card">
         <mat-card-header>
-          <mat-card-title>Alertes</mat-card-title>
-          <mat-card-subtitle>Problèmes détectés</mat-card-subtitle>
+          <mat-card-title>{{ 'dashboard.alerts' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'dashboard.detected_problems' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div *ngIf="stuckBagets.length" class="alert-section">
             <h4 [@pulse]="pulseAlert">
               <mat-icon color="warn">warning</mat-icon>
-              Baggets bloqués (2+ jours)
+              {{ 'dashboard.stuck_bagets_long' | translate }}
             </h4>
             <mat-chip-listbox>
               <mat-chip *ngFor="let bag of stuckBagets" 
@@ -404,7 +404,7 @@
           <div *ngIf="fullBagets.length" class="alert-section">
             <h4>
               <mat-icon color="accent">error</mat-icon>
-              Baggets pleins (10+ articles)
+              {{ 'dashboard.full_bagets_long' | translate }}
             </h4>
             <mat-chip-listbox>
               <mat-chip *ngFor="let bag of fullBagets" 
@@ -418,7 +418,7 @@
           <div *ngIf="!stuckBagets.length && !fullBagets.length" class="no-alerts">
             <div class="no-alerts-content">
               <mat-icon>check_circle</mat-icon>
-              <p>Aucune alerte - Tous les baggets circulent normalement</p>
+              <p>{{ 'dashboard.no_alerts_all_ok' | translate }}</p>
             </div>
           </div>
         </mat-card-content>

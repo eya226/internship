@@ -2,40 +2,40 @@
 <div class="menu-container">
   <div class="menu-header">
     <img src="assets/log.png" alt="Company Logo" class="logo">
-    <h1 class="app-title">Gestion de Stockage</h1>
+    <h1 class="app-title">{{ 'menu.title' | translate }}</h1>
     <p class="app-subtitle"></p>
   </div>
 
   <div class="menu-actions">
     <div class="action-card" routerLink="/secure/ajouter">
       <div class="action-icon">+</div>
-      <h3 class="action-title">Ajouter Stock</h3>
+      <h3 class="action-title">{{ 'menu.add_stock' | translate }}</h3>
       <p class="action-description"></p>
     </div>
 
     <div class="action-card" routerLink="/secure/recherche">
       <div class="action-icon">🔍</div>
-      <h3 class="action-title">Rechercher</h3>
+      <h3 class="action-title">{{ 'menu.search' | translate }}</h3>
       <p class="action-description"></p>
     </div>
 
     <div class="action-card" routerLink="/secure/enregistrement">
       <div class="action-icon">📋</div>
-      <h3 class="action-title">Liste Complète</h3>
+      <h3 class="action-title">{{ 'menu.full_list' | translate }}</h3>
       <p class="action-description"></p>
     </div>
 
     <!-- Admin-only Dashboard Card -->
     <div *ngIf="isAdmin" class="action-card" routerLink="/secure/dashboard">
       <div class="action-icon">📊</div>
-      <h3 class="action-title">Dashboard</h3>
-      <p class="action-description">Vue d'ensemble admin</p>
+      <h3 class="action-title">{{ 'menu.dashboard' | translate }}</h3>
+      <p class="action-description">{{ 'menu.dashboard_desc' | translate }}</p>
     </div>
   </div>
 
   <!-- Logout Button -->
   <div class="menu-footer">
-    <p class="user-info">Connecté en tant que: <strong>{{ username }} ({{ role || 'Invité' }})</strong></p>
-    <button class="logout-button" (click)="onLogout()">Déconnexion</button>
+    <p class="user-info">{{ 'menu.logged_in_as' | translate }} <strong>{{ username }} ({{ role || ('menu.guest' | translate) }})</strong></p>
+    <button class="logout-button" (click)="onLogout()">{{ 'menu.logout' | translate }}</button>
   </div>
 </div>

@@ -1,21 +1,20 @@
-
 <div class="container">
   <!-- Navigation Bar -->
   <nav class="navbar flex flex-wrap justify-center gap-4 mb-6">
-    <button routerLink="/secure/ajouter" class="btn-nav">← Retour à la liste</button>
-    <button routerLink="/secure/menu" class="btn-nav">🏠 Accueil</button>
-    <button (click)="onPrintFullList()" class="btn-nav">🖨️ Imprimer tout</button>
+    <button routerLink="/secure/ajouter" class="btn-nav">{{ 'search_stock.back_to_list' | translate }}</button>
+    <button routerLink="/secure/menu" class="btn-nav">{{ 'search_stock.home' | translate }}</button>
+    <button (click)="onPrintFullList()" class="btn-nav">{{ 'search_stock.print_all' | translate }}</button>
   </nav>
 
   <!-- Search Section -->
   <div class="search-section max-w-md mx-auto mb-8">
-    <label for="searchInput" class="block mb-2">Rechercher par :</label>
+    <label for="searchInput" class="block mb-2">{{ 'search_stock.search_by' | translate }}</label>
 
     <div class="search-container relative">
       <input id="searchInput"
              [(ngModel)]="searchTerm"
              (input)="applyFilter()"
-             placeholder="Rechercher..."
+             [placeholder]="'search_stock.search_placeholder' | translate"
              class="search-input w-full p-3 border rounded shadow-sm"
       />
 
@@ -26,11 +25,11 @@
       </div>
 
       <div *ngIf="showSearchOptions" class="search-dropdown mt-2 bg-white border rounded shadow p-2 z-10">
-        <div (click)="selectSearchType('codeOT')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code OT</div>
-        <div (click)="selectSearchType('codeITM')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code Item</div>
-        <div (click)="selectSearchType('codeComplet')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code Complet</div>
-        <div (click)="selectSearchType('emplacement')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Code Baguette</div>
-        <div (click)="selectSearchType('station')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">Station</div>
+        <div (click)="selectSearchType('codeOT')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'search_stock.code_ot' | translate }}</div>
+        <div (click)="selectSearchType('codeITM')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'search_stock.code_item' | translate }}</div>
+        <div (click)="selectSearchType('codeComplet')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'search_stock.code_complet' | translate }}</div>
+        <div (click)="selectSearchType('emplacement')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'search_stock.code_baguette' | translate }}</div>
+        <div (click)="selectSearchType('station')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'search_stock.station' | translate }}</div>
       </div>
     </div>
 
@@ -48,16 +47,16 @@
 
   <!-- Results Table -->
   <div class="table-container overflow-x-auto mb-8">
-    <h2 class="text-xl font-semibold text-center mb-4">🔍 Liste des enregistrements</h2>
+    <h2 class="text-xl font-semibold text-center mb-4">{{ 'search_stock.list_title' | translate }}</h2>
     <table class="min-w-full bg-white border border-gray-300 rounded shadow">
       <thead class="bg-blue-100">
         <tr>
-          <th class="border px-4 py-2 text-left">Code Plan</th>
-          <th class="border px-4 py-2 text-left">Code OT</th>
-          <th class="border px-4 py-2 text-left">Code Item</th>
-          <th class="border px-4 py-2 text-left">Code Baguette</th>
-          <th class="border px-4 py-2 text-left">Station</th>
-          <th class="border px-4 py-2 text-left">Date</th>
+          <th class="border px-4 py-2 text-left">{{ 'search_stock.code_plan' | translate }}</th>
+          <th class="border px-4 py-2 text-left">{{ 'search_stock.code_ot' | translate }}</th>
+          <th class="border px-4 py-2 text-left">{{ 'search_stock.code_item' | translate }}</th>
+          <th class="border px-4 py-2 text-left">{{ 'search_stock.code_baguette' | translate }}</th>
+          <th class="border px-4 py-2 text-left">{{ 'search_stock.station' | translate }}</th>
+          <th class="border px-4 py-2 text-left">{{ 'search_stock.date' | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -71,7 +70,7 @@
         </tr>
         <tr *ngIf="filteredStockages.length === 0">
           <td colspan="6" class="text-center p-4 text-gray-500">
-            Aucun enregistrement trouvé.
+            {{ 'search_stock.no_records' | translate }}
           </td>
         </tr>
       </tbody>
@@ -94,5 +93,5 @@
 
   <!-- Footer -->
   <div class="footer-section">
-    <p class="footer-text">© 2025 EMDEP. Tous droits réservés.</p>
+    <p class="footer-text">{{ 'search_stock.footer' | translate }}</p>
   </div>
