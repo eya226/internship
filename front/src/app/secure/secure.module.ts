@@ -27,6 +27,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { OrderByPipe } from '../pipes/order-by.pipe';
 import { AuthGuard } from '../auth/auth.guard';
 import { AdminGuard } from '../auth/admin.guard';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { AdminGuard } from '../auth/admin.guard';
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    TranslateModule,
     RouterModule.forChild([
       { path: '', redirectTo: 'menu', pathMatch: 'full' },
       { path: 'menu', component: MenuComponent },
@@ -71,7 +73,8 @@ import { AdminGuard } from '../auth/admin.guard';
   providers: [DatePipe],
   exports: [
     RouterModule,
-    OrderByPipe
+    OrderByPipe,
+    TranslateModule
   ]
 })
 export class SecureModule {}
