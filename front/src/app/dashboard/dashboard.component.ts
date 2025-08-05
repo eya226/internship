@@ -74,11 +74,6 @@ export class DashboardComponent implements OnInit {
   replaySpeed = 500;
   replayTimelineItems: StockOT[] = [];
 
-  // Heatmap
-  stuckItems: StockOT[] = [];
-  stuckItemsInterval: any;
-  stationUrgency: { [key: string]: string } = {};
-
   brandColors = {
     primary: '#005f87',
     secondary: '#00a1e0',
@@ -105,13 +100,10 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/secure/enregistrement']);
     }
     this.loadData();
-    this.loadStuckItems();
-    this.stuckItemsInterval = setInterval(() => this.loadStuckItems(), 30000);
     setInterval(() => this.pulseAlert = !this.pulseAlert, 1000);
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.stuckItemsInterval);
   }
 
   loadData(): void {
@@ -408,59 +400,6 @@ export class DashboardComponent implements OnInit {
     return '';
   }
 
-  exportStuckItemsAsPDF(): void {
-    const data = document.querySelector('.warehouse-map') as HTMLElement;
-    html2canvas(data).then(canvas => {
-      const contentDataURL = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const width = pdf.internal.pageSize.getWidth();
-      const height = canvas.height * width / canvas.width;
-      pdf.addImage(contentDataURL, 'PNG', 0, 0, width, height);
-      pdf.save('heatmap.pdf');
-    });
-  }
-
-  loadStuckItems(): void {
-    this.stockageService.getStuckItems().subscribe({
-      next: (data: StockOT[]) => {
-        this.stuckItems = data;
-        this.calculateStationUrgency();
-      },
-      error: () => {
-        // Handle error silently for auto-refresh
-      }
-    });
-  }
-
-  calculateStationUrgency(): void {
-    this.stationUrgency = {};
-    const stationStuckTimes: { [key: string]: number } = {};
-
-    this.stuckItems.forEach(item => {
-      const minutes = this.getTimeInStation(item);
-      if (!stationStuckTimes[item.station] || minutes > stationStuckTimes[item.station]) {
-        stationStuckTimes[item.station] = minutes;
-      }
-    });
-
-    for (const station in stationStuckTimes) {
-      if (stationStuckTimes.hasOwnProperty(station)) {
-        this.stationUrgency[station] = this.getUrgencyClass(stationStuckTimes[station]);
-      }
-    }
-  }
-
-  getUrgencyClass(minutes: number): string {
-    if (minutes > 15) return 'urgency-red';
-    if (minutes > 10) return 'urgency-yellow';
-    return 'urgency-green';
-  }
-
-  getTimeInStation(item: StockOT): number {
-    const now = new Date();
-    const itemDate = new Date(item.dateEnregistrement);
-    return (now.getTime() - itemDate.getTime()) / 60000;
-  }
 
   journeyReplay(): void {
     if (!this.selectedBaget) return;
@@ -482,15 +421,17 @@ export class DashboardComponent implements OnInit {
     this.replayTimelineItems = [];
     this.replayInterval = setInterval(() => {
       if (this.replayIndex < this.replayData.length) {
-        const item = this.replayData[this.replayIndex];
-        this.replayTimelineItems.push(item);
+        const item = this.replayData[this.replayData.length - 1 - this.replayIndex];
+        this.replayTimelineItems.unshift(item);
         const baget = this.bagets.find(b => b.emplacement === item.emplacement);
         if (baget) {
+          const previousStation = this.replayIndex > 0 ? this.replayData[this.replayData.length - this.replayIndex].station : baget.station;
+          baget.station = previousStation;
           baget.moving = true;
           setTimeout(() => {
             baget.station = item.station;
             baget.moving = false;
-          }, 500);
+          }, 30000);
         }
         this.replayIndex++;
       } else {

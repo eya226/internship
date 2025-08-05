@@ -423,30 +423,6 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- Live Bottleneck Monitor -->
-      <mat-card class="analytics-card bottleneck-card">
-        <mat-card-header>
-          <mat-card-title>{{ 'dashboard.live_bottleneck_monitor' | translate }}</mat-card-title>
-          <button mat-icon-button (click)="exportStuckItemsAsPDF()" [matTooltip]="'dashboard.export_as_pdf' | translate">
-            <mat-icon>picture_as_pdf</mat-icon>
-          </button>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="bottleneck-grid">
-            <div *ngFor="let item of stuckItems" class="bottleneck-item" [ngClass]="getUrgencyClass(getTimeInStation(item))"
-                 [matTooltip]="'Item: ' + item.codeComplet + '\nStation: ' + getStationName(item.station) + '\nDate: ' + (item.dateEnregistrement | date:'short')">
-              <div class="item-id">{{item.emplacement}}</div>
-              <div class="item-count">{{getBagetItemCount(item.emplacement)}} {{ 'dashboard.items_label' | translate }}</div>
-              <div class="item-time">{{getTimeInStation(item) | number:'1.0-0'}} {{ 'dashboard.minutes_label' | translate }}</div>
-              <button mat-stroked-button (click)="moveToNextStation(item.emplacement)">{{ 'dashboard.move_now' | translate }}</button>
-            </div>
-          </div>
-          <div *ngIf="stuckItems.length === 0" class="no-alerts">
-            <p>{{ 'dashboard.no_bottlenecks' | translate }}</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
       <!-- Alerts Card -->
       <mat-card class="analytics-card alerts-card">
         <mat-card-header>
