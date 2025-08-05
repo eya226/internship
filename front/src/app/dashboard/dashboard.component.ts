@@ -486,7 +486,11 @@ export class DashboardComponent implements OnInit {
         this.replayTimelineItems.push(item);
         const baget = this.bagets.find(b => b.emplacement === item.emplacement);
         if (baget) {
-          baget.station = item.station;
+          baget.moving = true;
+          setTimeout(() => {
+            baget.station = item.station;
+            baget.moving = false;
+          }, 500);
         }
         this.replayIndex++;
       } else {
