@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-dashboard',
@@ -71,10 +72,12 @@ export class DashboardComponent implements OnInit {
   replayIndex = 0;
   replayInterval: any;
   replaySpeed = 500;
+  replayTimelineItems: StockOT[] = [];
 
   // Heatmap
   stuckItems: StockOT[] = [];
   stuckItemsInterval: any;
+  stationUrgency: { [key: string]: string } = {};
 
   brandColors = {
     primary: '#005f87',
@@ -406,28 +409,22 @@ export class DashboardComponent implements OnInit {
   }
 
   exportStuckItemsAsPDF(): void {
-    const doc = new jsPDF();
-    const tableColumn = ["Emplacement", "Item Count", "Time in Station (min)"];
-    const tableRows: any[] = [];
-
-    this.stuckItems.forEach(item => {
-      const itemData = [
-        item.emplacement,
-        this.getBagetItemCount(item.emplacement),
-        this.getTimeInStation(item).toFixed(2)
-      ];
-      tableRows.push(itemData);
+    const data = document.querySelector('.warehouse-map') as HTMLElement;
+    html2canvas(data).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const width = pdf.internal.pageSize.getWidth();
+      const height = canvas.height * width / canvas.width;
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, width, height);
+      pdf.save('heatmap.pdf');
     });
-
-    (doc as any).autoTable(tableColumn, tableRows, { startY: 20 });
-    doc.text("Stuck Items", 14, 15);
-    doc.save('stuck-items.pdf');
   }
 
   loadStuckItems(): void {
     this.stockageService.getStuckItems().subscribe({
       next: (data: StockOT[]) => {
         this.stuckItems = data;
+        this.calculateStationUrgency();
       },
       error: () => {
         // Handle error silently for auto-refresh
@@ -435,8 +432,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getUrgencyClass(item: StockOT): string {
-    const minutes = this.getTimeInStation(item);
+  calculateStationUrgency(): void {
+    this.stationUrgency = {};
+    const stationStuckTimes: { [key: string]: number } = {};
+
+    this.stuckItems.forEach(item => {
+      const minutes = this.getTimeInStation(item);
+      if (!stationStuckTimes[item.station] || minutes > stationStuckTimes[item.station]) {
+        stationStuckTimes[item.station] = minutes;
+      }
+    });
+
+    for (const station in stationStuckTimes) {
+      if (stationStuckTimes.hasOwnProperty(station)) {
+        this.stationUrgency[station] = this.getUrgencyClass(stationStuckTimes[station]);
+      }
+    }
+  }
+
+  getUrgencyClass(minutes: number): string {
     if (minutes > 15) return 'urgency-red';
     if (minutes > 10) return 'urgency-yellow';
     return 'urgency-green';
@@ -465,9 +479,11 @@ export class DashboardComponent implements OnInit {
   }
 
   startReplay(): void {
+    this.replayTimelineItems = [];
     this.replayInterval = setInterval(() => {
       if (this.replayIndex < this.replayData.length) {
         const item = this.replayData[this.replayIndex];
+        this.replayTimelineItems.push(item);
         const baget = this.bagets.find(b => b.emplacement === item.emplacement);
         if (baget) {
           baget.station = item.station;
@@ -493,6 +509,7 @@ export class DashboardComponent implements OnInit {
     this.isReplaying = false;
     this.replayData = [];
     this.replayIndex = 0;
+    this.replayTimelineItems = [];
     this.loadData(); // Reload original data
   }
 

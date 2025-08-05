@@ -141,6 +141,15 @@
     "detected_problems": "Problemas detectados",
     "stuck_bagets_long": "Bagets atascados (2+ días)",
     "full_bagets_long": "Bagets llenos (10+ artículos)",
-    "no_alerts_all_ok": "No hay alertas - Todos los bagets circulan normalmente"
+    "no_alerts_all_ok": "No hay alertas - Todos los bagets circulan normally",
+    "play_journey": "Reproducir viaje",
+    "journey_replay": "Reproducción de viaje",
+    "speed": "Velocidad",
+    "live_bottleneck_monitor": "Monitor de cuellos de botella en vivo",
+    "items_label": "artículos",
+    "minutes_label": "min",
+    "move_now": "Mover ahora",
+    "no_bottlenecks": "No se detectaron cuellos de botella.",
+    "export_as_pdf": "Exportar como PDF"
   }
 }

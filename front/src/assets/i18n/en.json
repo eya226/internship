@@ -141,6 +141,15 @@
     "detected_problems": "Detected problems",
     "stuck_bagets_long": "Stuck bagets (2+ days)",
     "full_bagets_long": "Full bagets (10+ items)",
-    "no_alerts_all_ok": "No alerts - All bagets are circulating normally"
+    "no_alerts_all_ok": "No alerts - All bagets are circulating normally",
+    "play_journey": "Play Journey",
+    "journey_replay": "Journey Replay",
+    "speed": "Speed",
+    "live_bottleneck_monitor": "Live Bottleneck Monitor",
+    "items_label": "items",
+    "minutes_label": "min",
+    "move_now": "Move Now",
+    "no_bottlenecks": "No bottlenecks detected.",
+    "export_as_pdf": "Export as PDF"
   }
 }

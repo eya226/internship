@@ -141,6 +141,15 @@
     "detected_problems": "Problèmes détectés",
     "stuck_bagets_long": "Baggets bloqués (2+ jours)",
     "full_bagets_long": "Baggets pleins (10+ articles)",
-    "no_alerts_all_ok": "Aucune alerte - Tous les baggets circulent normalement"
+    "no_alerts_all_ok": "Aucune alerte - Tous les baggets circulent normalement",
+    "play_journey": "Lire le trajet",
+    "journey_replay": "Relecture du trajet",
+    "speed": "Vitesse",
+    "live_bottleneck_monitor": "Moniteur de goulots d'étranglement en direct",
+    "items_label": "articles",
+    "minutes_label": "min",
+    "move_now": "Déplacer maintenant",
+    "no_bottlenecks": "Aucun goulot d'étranglement détecté.",
+    "export_as_pdf": "Exporter en PDF"
   }
 }

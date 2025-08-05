@@ -103,7 +103,7 @@
         </svg>
         
         <!-- Stations -->
-        <div class="station station-1">
+        <div class="station station-1" [ngClass]="stationUrgency['STATION_1']">
           <div class="station-icon-container">
             <div class="station-icon">1</div>
           </div>
@@ -119,7 +119,7 @@
           </div>
         </div>
 
-        <div class="station station-2">
+        <div class="station station-2" [ngClass]="stationUrgency['STATION_2']">
           <div class="station-icon-container">
             <div class="station-icon">2</div>
           </div>
@@ -135,7 +135,7 @@
           </div>
         </div>
 
-        <div class="station station-3">
+        <div class="station station-3" [ngClass]="stationUrgency['DELIVERED']">
           <div class="station-icon-container">
             <div class="station-icon">3</div>
           </div>
@@ -200,7 +200,7 @@
           </button>
           <button mat-stroked-button (click)="journeyReplay()" class="action-button">
             <mat-icon>play_arrow</mat-icon>
-            Play Journey
+            {{ 'dashboard.play_journey' | translate }}
           </button>
           <button mat-stroked-button color="accent" 
                   *ngIf="getSelectedBagetStation() === 'DELIVERED' && !isBagetMoving(selectedBaget)"
@@ -239,7 +239,7 @@
         </div>
 
         <div class="journey-replay" *ngIf="isReplaying">
-          <h3>Journey Replay</h3>
+          <h3>{{ 'dashboard.journey_replay' | translate }}</h3>
           <div class="replay-controls">
             <button mat-icon-button (click)="pauseReplay()">
               <mat-icon>pause</mat-icon>
@@ -251,7 +251,7 @@
               <mat-icon>replay</mat-icon>
             </button>
             <mat-form-field>
-              <mat-label>Speed</mat-label>
+              <mat-label>{{ 'dashboard.speed' | translate }}</mat-label>
               <mat-select (selectionChange)="setReplaySpeed($event.value)">
                 <mat-option [value]="1000">1x</mat-option>
                 <mat-option [value]="500">2x</mat-option>
@@ -260,7 +260,7 @@
             </mat-form-field>
           </div>
           <div class="timeline-scroll-container">
-            <div class="timeline-item" *ngFor="let item of replayData; let i = index" [class.active]="i === replayIndex - 1">
+            <div class="timeline-item" *ngFor="let item of replayTimelineItems; let i = index" [class.active]="i === replayIndex - 1">
               <div class="timeline-badge" [style.background-color]="bagetColors[selectedBaget || '']"></div>
               <div class="timeline-content">
                 <div class="timeline-time">{{item.dateEnregistrement | date:'medium'}}</div>
@@ -419,30 +419,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <!-- Live Bottleneck Monitor -->
-      <mat-card class="analytics-card bottleneck-card">
-        <mat-card-header>
-          <mat-card-title>Live Bottleneck Monitor</mat-card-title>
-          <button mat-icon-button (click)="exportStuckItemsAsPDF()" matTooltip="Export as PDF">
-            <mat-icon>picture_as_pdf</mat-icon>
-          </button>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="bottleneck-grid">
-            <div *ngFor="let item of stuckItems" class="bottleneck-item" [ngClass]="getUrgencyClass(item)"
-                 [matTooltip]="'Item: ' + item.codeComplet + '\nStation: ' + getStationName(item.station) + '\nDate: ' + (item.dateEnregistrement | date:'short')">
-              <div class="item-id">{{item.emplacement}}</div>
-              <div class="item-count">{{getBagetItemCount(item.emplacement)}} items</div>
-              <div class="item-time">{{getTimeInStation(item) | number:'1.0-0'}} min</div>
-              <button mat-stroked-button (click)="moveToNextStation(item.emplacement)">Move Now</button>
-            </div>
-          </div>
-          <div *ngIf="stuckItems.length === 0" class="no-alerts">
-            <p>No bottlenecks detected.</p>
           </div>
         </mat-card-content>
       </mat-card>
