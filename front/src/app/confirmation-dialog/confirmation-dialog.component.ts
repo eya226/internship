@@ -16,35 +16,42 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   `,
   styles: [`
     .dialog-container {
-      padding: 20px;
-      max-width: 350px;
+      padding: 2rem;
+      background-color: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px var(--shadow-color);
+      text-align: center;
     }
     .dialog-title {
-      color: #d93025;
-      margin-bottom: 16px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--royal-blue);
+      margin-bottom: 1rem;
     }
     .dialog-content {
-      padding: 16px 0;
-      font-size: 16px;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 2rem;
     }
     .dialog-actions {
       display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      padding-top: 16px;
+      justify-content: center;
+      gap: 1rem;
     }
     .btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(44, 62, 148, 0.2);
     }
     .btn-no {
       background: #f0f0f0;
+      color: #333;
     }
     .btn-yes {
-      background: #d93025;
-      color: white;
+      background: var(--royal-blue);
+      color: var(--white);
     }
   `]
 })

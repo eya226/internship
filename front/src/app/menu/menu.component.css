@@ -1,17 +1,10 @@
-:root {
-  --primary-color: #2c3e50;
-  --secondary-color: #3498db;
-  --accent-color: #e74c3c;
-  --accent-hover: #c0392b;
-  --light-color: #ecf0f1;
-  --dark-color: #34495e;
-}
-
 .menu-container {
-  min-height: 100vh;
-  background-color: #f5f7fa;
   padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .menu-header {
@@ -25,16 +18,14 @@
 }
 
 .app-title {
-  color: var(--primary-color);
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--royal-blue);
 }
 
 .app-subtitle {
-  color: var(--dark-color);
-  font-size: 1.1rem;
-  opacity: 0.8;
+  font-size: 1.2rem;
+  color: #aaa;
 }
 
 .menu-actions {
@@ -42,80 +33,72 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .action-card {
-  background: white;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
   padding: 2rem;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px var(--shadow-color);
 }
 
 .action-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  border-color: var(--secondary-color);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(44, 62, 148, 0.15);
+  border-color: var(--royal-blue);
 }
 
 .action-icon {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
-  color: var(--secondary-color);
+  color: var(--royal-blue);
 }
 
 .action-title {
-  color: var(--primary-color);
-  font-size: 1.4rem;
-  margin-bottom: 0.8rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--royal-blue);
+  margin-bottom: 0.5rem;
 }
 
 .action-description {
-  color: #7f8c8d;
   font-size: 1rem;
-  line-height: 1.5;
+  color: #666;
 }
 
 .menu-footer {
   margin-top: 4rem;
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #eee;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .user-info {
-  color: var(--dark-color);
   margin-bottom: 1rem;
+  color: #666;
 }
 
-/* Updated Logout Button Styles */
 .logout-button {
-  background-color: var(--accent-color);
-  color: rgb(9, 4, 144);
-  border: none;
+  background: var(--royal-blue);
+  color: var(--white);
   padding: 0.8rem 2rem;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-block;
-  min-width: 150px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(44, 62, 148, 0.2);
 }
 
 .logout-button:hover {
-  background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Focus state for accessibility */
-.logout-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.4);
+  box-shadow: 0 6px 20px rgba(44, 62, 148, 0.3);
 }

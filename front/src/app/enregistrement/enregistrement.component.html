@@ -1,6 +1,6 @@
 <div class="container">
   <!-- Navigation Bar -->
-  <nav class="navbar flex flex-wrap justify-center gap-4 mb-6">
+  <nav class="navbar">
     <button routerLink="/secure/ajouter" class="btn-nav">{{ 'records.back_to_list' | translate }}</button>
     <button routerLink="/secure/menu" class="btn-nav">{{ 'records.home' | translate }}</button>
     <button (click)="onPrintFull()" class="btn-nav">{{ 'records.print_all' | translate }}</button>
@@ -8,80 +8,67 @@
   </nav>
 
   <!-- Search Section -->
-  <div class="search-section max-w-md mx-auto mb-8">
-    <label for="searchInput" class="block mb-2">{{ 'records.search_by' | translate }}</label>
-
-    <div class="search-container relative">
+  <div class="search-section">
+    <div class="search-container">
       <input id="searchInput"
              [(ngModel)]="searchTerm"
              (input)="applyFilter()"
              [placeholder]="'records.search_placeholder' | translate"
-             class="search-input w-full p-3 border rounded shadow-sm"
+             class="search-input"
       />
-
-      <div class="search-dropdown-toggle mt-2 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors px-3 py-2 rounded text-sm"
-           (click)="showSearchOptions = !showSearchOptions">
+      <div class="search-dropdown-toggle" (click)="showSearchOptions = !showSearchOptions">
         {{ getSearchTypeLabel() }}
-        <span class="dropdown-arrow ml-1">▼</span>
+        <span class="dropdown-arrow">▼</span>
       </div>
-
-      <div *ngIf="showSearchOptions" class="search-dropdown mt-2 bg-white border rounded shadow p-2 z-10">
-        <div (click)="selectSearchType('codeOT')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'records.code_ot' | translate }}</div>
-        <div (click)="selectSearchType('codeITM')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'records.code_item' | translate }}</div>
-        <div (click)="selectSearchType('codeComplet')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'records.code_complet' | translate }}</div>
-        <div (click)="selectSearchType('emplacement')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'records.code_baguette' | translate }}</div>
-        <div (click)="selectSearchType('station')" class="dropdown-item py-2 px-3 hover:bg-gray-100 cursor-pointer">{{ 'records.station' | translate }}</div>
+      <div *ngIf="showSearchOptions" class="search-dropdown">
+        <div (click)="selectSearchType('codeOT')" class="dropdown-item">{{ 'records.code_ot' | translate }}</div>
+        <div (click)="selectSearchType('codeITM')" class="dropdown-item">{{ 'records.code_item' | translate }}</div>
+        <div (click)="selectSearchType('codeComplet')" class="dropdown-item">{{ 'records.code_complet' | translate }}</div>
+        <div (click)="selectSearchType('emplacement')" class="dropdown-item">{{ 'records.code_baguette' | translate }}</div>
+        <div (click)="selectSearchType('station')" class="dropdown-item">{{ 'records.station' | translate }}</div>
       </div>
-    </div>
-
-    <!-- Selected Search Type Badge -->
-    <div *ngIf="searchType && !showSearchOptions" class="search-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full inline-block mt-4">
-      {{ getSearchTypeLabel() }}
-      <span (click)="clearSearchType()" class="ml-2 cursor-pointer">×</span>
     </div>
   </div>
 
   <!-- Error Message -->
-  <div *ngIf="erreur" class="error-message bg-red-100 text-red-800 p-4 rounded mb-6">
+  <div *ngIf="erreur" class="error-message">
     ⚠️ {{ erreur }}
   </div>
 
   <!-- Results Table -->
-  <div class="table-container overflow-x-auto mb-8">
-    <h2 class="text-xl font-semibold text-center mb-4">{{ 'records.list_title' | translate }}</h2>
-    <table class="min-w-full bg-white border border-gray-300 rounded shadow">
-      <thead class="bg-blue-100">
+  <div class="table-container">
+    <h2>{{ 'records.list_title' | translate }}</h2>
+    <table>
+      <thead>
         <tr>
-          <th class="border px-4 py-2 text-left">{{ 'records.code_plan' | translate }}</th>
-          <th class="border px-4 py-2 text-left">{{ 'records.code_ot' | translate }}</th>
-          <th class="border px-4 py-2 text-left">{{ 'records.code_item' | translate }}</th>
-          <th class="border px-4 py-2 text-left">{{ 'records.code_baguette' | translate }}</th>
-          <th class="border px-4 py-2 text-left">{{ 'records.station' | translate }}</th>
-          <th class="border px-4 py-2 text-left">{{ 'records.date' | translate }}</th>
-          <th class="border px-4 py-2 text-left">{{ 'records.actions' | translate }}</th>
+          <th>{{ 'records.code_plan' | translate }}</th>
+          <th>{{ 'records.code_ot' | translate }}</th>
+          <th>{{ 'records.code_item' | translate }}</th>
+          <th>{{ 'records.code_baguette' | translate }}</th>
+          <th>{{ 'records.station' | translate }}</th>
+          <th>{{ 'records.date' | translate }}</th>
+          <th>{{ 'records.actions' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of displayedStockages">
-          <td class="border px-4 py-2">{{ item.codeComplet || '-' }}</td>
-          <td class="border px-4 py-2">{{ item.codeOT }}</td>
-          <td class="border px-4 py-2">{{ item.codeITM }}</td>
-          <td class="border px-4 py-2">{{ item.emplacement }}</td>
-          <td class="border px-4 py-2">{{ item.station }}</td>
-          <td class="border px-4 py-2">{{ item.dateEnregistrement | date:'short' }}</td>
-          <td class="border px-4 py-2">
-            <div class="flex gap-2">
-              <button (click)="onModify(item)" class="action-btn modify-btn" [title]="'records.edit' | translate">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button (click)="onDelete(item)" class="action-btn delete-btn" [title]="'records.delete' | translate">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
+          <td>{{ item.codeComplet || '-' }}</td>
+          <td>{{ item.codeOT }}</td>
+          <td>{{ item.codeITM }}</td>
+          <td>{{ item.emplacement }}</td>
+          <td>{{ item.station }}</td>
+          <td>{{ item.dateEnregistrement | date:'short' }}</td>
+          <td>
+            <button (click)="onModify(item)" class="action-btn modify-btn" [title]="'records.edit' | translate">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="onDelete(item)" class="action-btn delete-btn" [title]="'records.delete' | translate">
+              <i class="fas fa-trash"></i>
+            </button>
           </td>
         </tr>
         <tr *ngIf="filteredStockages.length === 0">
-          <td colspan="7" class="text-center p-4 text-gray-500">
+          <td colspan="7" class="text-center">
             {{ 'records.no_records' | translate }}
           </td>
         </tr>
@@ -90,18 +77,17 @@
   </div>
 
   <!-- Pagination -->
-  <div *ngIf="totalPages > 1" class="pagination flex justify-center gap-2 mt-4">
+  <div *ngIf="totalPages > 1" class="pagination">
     <button 
       *ngFor="let page of [].constructor(totalPages); let i = index"
       (click)="onPageChange(i + 1)"
-      [class.bg-blue-500]="currentPage === i + 1"
-      [class.text-white]="currentPage === i + 1"
-      class="px-4 py-2 border rounded hover:bg-blue-100">
+      [class.active]="currentPage === i + 1">
       {{ i + 1 }}
     </button>
   </div>
-</div>
- <!-- Footer -->
+
+  <!-- Footer -->
   <div class="footer-section">
     <p class="footer-text">{{ 'records.footer' | translate }}</p>
   </div>
+</div>

@@ -7,8 +7,8 @@
 
   <!-- Navigation -->
   <div class="navigation-section">
-    <button routerLink="/secure/liste" class="nav-button back-button">{{ 'add_stock.back_to_list' | translate }}</button>
-    <button routerLink="/secure/menu" class="nav-button home-button">{{ 'add_stock.home' | translate }}</button>
+    <button routerLink="/secure/liste" class="nav-button">{{ 'add_stock.back_to_list' | translate }}</button>
+    <button routerLink="/secure/menu" class="nav-button">{{ 'add_stock.home' | translate }}</button>
   </div>
 
   <!-- Form -->
@@ -18,13 +18,12 @@
     <form [formGroup]="stockForm" (submit)="$event.preventDefault()" class="stock-form">
       <!-- Code Plan Field -->
       <div class="form-group">
-        <label class="input-label">{{ 'add_stock.code_plan' | translate }}</label>
         <input type="text"
                formControlName="codeComplet"
-               [placeholder]="'add_stock.code_plan_placeholder' | translate"
+               placeholder=" "
                class="form-input"
                [class.is-invalid]="f['codeComplet'].invalid && f['codeComplet'].touched">
-
+        <label class="input-label">{{ 'add_stock.code_plan' | translate }}</label>
         <!-- Validation Messages -->
         <div *ngIf="f['codeComplet'].invalid && f['codeComplet'].touched" class="error-message">
           <div *ngIf="f['codeComplet'].errors?.['required']">{{ 'add_stock.field_required' | translate }}</div>
@@ -34,20 +33,19 @@
         </div>
 
         <!-- Duplicate Warning -->
-        <div *ngIf="duplicateMessage" class="duplicate-warning bg-yellow-100 text-yellow-800 p-3 rounded mt-2">
+        <div *ngIf="duplicateMessage" class="duplicate-warning">
           {{ duplicateMessage }}
         </div>
       </div>
 
       <!-- Code Baguette Field -->
       <div class="form-group">
-        <label class="input-label">{{ 'add_stock.code_baguette' | translate }}</label>
         <input type="text"
                formControlName="emplacement"
-               [placeholder]="'add_stock.code_baguette_placeholder' | translate"
+               placeholder=" "
                class="form-input"
                [class.is-invalid]="f['emplacement'].invalid && f['emplacement'].touched">
-
+        <label class="input-label">{{ 'add_stock.code_baguette' | translate }}</label>
         <!-- Validation Messages -->
         <div *ngIf="f['emplacement'].invalid && f['emplacement'].touched" class="error-message">
           <div *ngIf="f['emplacement'].errors?.['required']">{{ 'add_stock.field_required' | translate }}</div>
@@ -59,7 +57,6 @@
 
       <!-- Station Field -->
       <div class="form-group">
-        <label class="input-label">{{ 'add_stock.station' | translate }}</label>
         <select formControlName="station"
                 class="form-input"
                 [class.is-invalid]="f['station'].invalid && f['station'].touched">
@@ -68,7 +65,7 @@
           <option value="STATION_2">{{ 'add_stock.station_2' | translate }}</option>
           <option value="DELIVERED">{{ 'add_stock.delivered' | translate }}</option>
         </select>
-
+        <label class="input-label">{{ 'add_stock.station' | translate }}</label>
         <!-- Validation Messages -->
         <div *ngIf="f['station'].invalid && f['station'].touched" class="error-message">
           <div *ngIf="f['station'].errors?.['required']">{{ 'add_stock.field_required' | translate }}</div>
@@ -84,9 +81,9 @@
       </button>
     </form>
   </div>
-</div>
 
   <!-- Footer -->
   <div class="footer-section">
     <p class="footer-text">{{ 'add_stock.footer' | translate }}</p>
   </div>
+</div>

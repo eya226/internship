@@ -8,29 +8,29 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   selector: 'app-modify-dialog',
   template: `
     <div class="dialog-container">
-      <h2>Modifier l'enregistrement</h2>
+      <h2 class="dialog-title">Modifier l'enregistrement</h2>
       <div class="dialog-content">
         <form [formGroup]="modifyForm">
           <div class="form-group">
-            <label>Code Complet</label>
-            <input type="text" formControlName="codeComplet" readonly>
+            <input type="text" formControlName="codeComplet" readonly class="form-input">
+            <label class="input-label">Code Complet</label>
           </div>
           
           <div class="form-group">
-            <label>Emplacement</label>
-            <input type="text" formControlName="emplacement" required>
+            <input type="text" formControlName="emplacement" required class="form-input" placeholder=" ">
+            <label class="input-label">Emplacement</label>
             <div *ngIf="modifyForm.get('emplacement')?.invalid && modifyForm.get('emplacement')?.touched" class="error-message">
               Ce champ est obligatoire
             </div>
           </div>
 
           <div class="form-group">
-            <label>Station</label>
-            <select formControlName="station" required>
+            <select formControlName="station" required class="form-input">
               <option value="STATION_1">Station 1</option>
               <option value="STATION_2">Station 2</option>
               <option value="DELIVERED">Livré</option>
             </select>
+            <label class="input-label">Station</label>
             <div *ngIf="modifyForm.get('station')?.invalid && modifyForm.get('station')?.touched" class="error-message">
               Ce champ est obligatoire
             </div>
@@ -45,50 +45,78 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   `,
   styles: [`
     .dialog-container {
-      padding: 20px;
-      max-width: 500px;
+      padding: 2rem;
+      background-color: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px var(--shadow-color);
     }
-    .dialog-content {
-      padding: 20px 0;
+    .dialog-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--royal-blue);
+      margin-bottom: 2rem;
+      text-align: center;
     }
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 2rem;
+      position: relative;
     }
-    label {
-      display: block;
-      margin-bottom: 4px;
+    .input-label {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      font-size: 1rem;
+      color: #aaa;
+      pointer-events: none;
+      transition: all 0.3s ease;
     }
-    input, select {
+    .form-input {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      padding: 10px 0;
+      border: none;
+      border-bottom: 2px solid #eee;
+      background: none;
+      font-size: 1rem;
+    }
+    .form-input:focus {
+      border-bottom-color: var(--royal-blue);
+      outline: none;
+    }
+    .form-input:focus + .input-label,
+    .form-input:not(:placeholder-shown) + .input-label {
+      top: -20px;
+      left: 0;
+      font-size: 0.8rem;
+      color: var(--royal-blue);
     }
     .error-message {
-      color: #d93025;
-      font-size: 14px;
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
     }
     .dialog-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
-      padding-top: 16px;
+      gap: 1rem;
+      margin-top: 2rem;
     }
     .btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(44, 62, 148, 0.2);
     }
     .btn-cancel {
       background: #f0f0f0;
+      color: #333;
     }
     .btn-save {
-      background: #2196F3;
-      color: white;
+      background: var(--royal-blue);
+      color: var(--white);
     }
     .btn-save:disabled {
-      background: #cccccc;
+      background: #a0c4ff;
       cursor: not-allowed;
     }
   `]
