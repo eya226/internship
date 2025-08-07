@@ -823,3 +823,21 @@ nav.mat-tab-nav-bar {
 }
 
 /* Rest of the CSS remains the same */
+
+.back-button {
+  background: none;
+  border: none;
+  color: var(--royal-blue);
+  cursor: pointer;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: rgba(44, 62, 148, 0.1);
+}
