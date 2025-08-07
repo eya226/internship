@@ -1,4 +1,88 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Royal Pulse Theme */
+:root {
+  --royal-blue: #2C3E94;
+  --white: #FFFFFF;
+  --accent-gradient: linear-gradient(135deg, #2C3E94 0%, #6A73D1 100%);
+  --shadow-color: rgba(44, 62, 148, 0.1);
+  --dark-navy: #0D1030;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--white);
+  color: #333; /* Default text color */
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700; /* bold */
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+h4, h5, h6 {
+  font-weight: 400; /* regular */
+}
+
+p, body, button, input, textarea, select {
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+}
+
+a {
+  color: var(--royal-blue);
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+a:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: var(--royal-blue);
+  transition: width 0.3s ease;
+  -webkit-transition: width 0.3s ease;
+}
+
+a:hover:after {
+  width: 100%;
+  left: 0;
+  background-color: var(--royal-blue);
+}
+
+/* Button Resets */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Form Input Resets */
+input, textarea, select {
+  border: none;
+  font-family: 'Poppins', sans-serif;
+}

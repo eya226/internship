@@ -1,0 +1,26 @@
+.language-switcher {
+  padding: 1rem;
+  text-align: right;
+  background-color: var(--white);
+}
+
+.language-switcher button {
+  background-color: var(--royal-blue);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 700; /* bold */
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(44, 62, 148, 0.2);
+}
+
+.language-switcher button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(44, 62, 148, 0.3);
+}
+
+.language-switcher button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(44, 62, 148, 0.2);
+}
