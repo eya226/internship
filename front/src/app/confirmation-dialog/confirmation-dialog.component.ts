@@ -1,6 +1,7 @@
 // src/app/confirmation-dialog/confirmation-dialog.component.ts
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -9,8 +10,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
       <h2 class="dialog-title">{{ data.title }}</h2>
       <div class="dialog-content">{{ data.message }}</div>
       <div class="dialog-actions">
-        <button class="btn btn-no" (click)="onNoClick()">Non</button>
-        <button class="btn btn-yes" (click)="onYesClick()">Oui</button>
+        <button class="btn btn-no" (click)="onNoClick()">{{ 'dialog.no' | translate }}</button>
+        <button class="btn btn-yes" (click)="onYesClick()">{{ 'dialog.yes' | translate }}</button>
       </div>
     </div>
   `,

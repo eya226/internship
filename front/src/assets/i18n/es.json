@@ -151,5 +151,21 @@
     "move_now": "Mover ahora",
     "no_bottlenecks": "No se detectaron cuellos de botella.",
     "export_as_pdf": "Exportar como PDF"
+  },
+  "dialog": {
+    "modify_title": "Editar Registro",
+    "code_complet": "Código Completo",
+    "emplacement": "Ubicación",
+    "station": "Estación",
+    "station_1": "Estación 1",
+    "station_2": "Estación 2",
+    "delivered": "Entregado",
+    "required_field": "Este campo es obligatorio",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "confirm_title": "Confirmar",
+    "confirm_message": "¿Estás seguro?",
+    "yes": "Sí",
+    "no": "No"
   }
 }

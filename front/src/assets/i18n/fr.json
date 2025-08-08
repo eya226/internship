@@ -151,5 +151,21 @@
     "move_now": "Déplacer maintenant",
     "no_bottlenecks": "Aucun goulot d'étranglement détecté.",
     "export_as_pdf": "Exporter en PDF"
+  },
+  "dialog": {
+    "modify_title": "Modifier l'enregistrement",
+    "code_complet": "Code Complet",
+    "emplacement": "Emplacement",
+    "station": "Station",
+    "station_1": "Station 1",
+    "station_2": "Station 2",
+    "delivered": "Livré",
+    "required_field": "Ce champ est obligatoire",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "confirm_title": "Confirmer",
+    "confirm_message": "Êtes-vous sûr ?",
+    "yes": "Oui",
+    "no": "Non"
   }
 }

@@ -151,5 +151,21 @@
     "move_now": "Move Now",
     "no_bottlenecks": "No bottlenecks detected.",
     "export_as_pdf": "Export as PDF"
+  },
+  "dialog": {
+    "modify_title": "Edit Record",
+    "code_complet": "Full Code",
+    "emplacement": "Location",
+    "station": "Station",
+    "station_1": "Station 1",
+    "station_2": "Station 2",
+    "delivered": "Delivered",
+    "required_field": "This field is required",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirm_title": "Confirm",
+    "confirm_message": "Are you sure?",
+    "yes": "Yes",
+    "no": "No"
   }
 }

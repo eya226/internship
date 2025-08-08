@@ -3,43 +3,44 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StockOT } from '../stockage-service.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modify-dialog',
   template: `
     <div class="dialog-container">
-      <h2 class="dialog-title">Modifier l'enregistrement</h2>
+      <h2 class="dialog-title">{{ 'dialog.modify_title' | translate }}</h2>
       <div class="dialog-content">
         <form [formGroup]="modifyForm">
           <div class="form-group">
             <input type="text" formControlName="codeComplet" readonly class="form-input">
-            <label class="input-label">Code Complet</label>
+            <label class="input-label">{{ 'dialog.code_complet' | translate }}</label>
           </div>
           
           <div class="form-group">
             <input type="text" formControlName="emplacement" required class="form-input" placeholder=" ">
-            <label class="input-label">Emplacement</label>
+            <label class="input-label">{{ 'dialog.emplacement' | translate }}</label>
             <div *ngIf="modifyForm.get('emplacement')?.invalid && modifyForm.get('emplacement')?.touched" class="error-message">
-              Ce champ est obligatoire
+              {{ 'dialog.required_field' | translate }}
             </div>
           </div>
 
           <div class="form-group">
             <select formControlName="station" required class="form-input">
-              <option value="STATION_1">Station 1</option>
-              <option value="STATION_2">Station 2</option>
-              <option value="DELIVERED">Livré</option>
+              <option value="STATION_1">{{ 'dialog.station_1' | translate }}</option>
+              <option value="STATION_2">{{ 'dialog.station_2' | translate }}</option>
+              <option value="DELIVERED">{{ 'dialog.delivered' | translate }}</option>
             </select>
-            <label class="input-label">Station</label>
+            <label class="input-label">{{ 'dialog.station' | translate }}</label>
             <div *ngIf="modifyForm.get('station')?.invalid && modifyForm.get('station')?.touched" class="error-message">
-              Ce champ est obligatoire
+              {{ 'dialog.required_field' | translate }}
             </div>
           </div>
         </form>
       </div>
       <div class="dialog-actions">
-        <button class="btn btn-cancel" (click)="onCancel()">Annuler</button>
-        <button class="btn btn-save" (click)="onSave()" [disabled]="modifyForm.invalid">Enregistrer</button>
+        <button class="btn btn-cancel" (click)="onCancel()">{{ 'dialog.cancel' | translate }}</button>
+        <button class="btn btn-save" (click)="onSave()" [disabled]="modifyForm.invalid">{{ 'dialog.save' | translate }}</button>
       </div>
     </div>
   `,

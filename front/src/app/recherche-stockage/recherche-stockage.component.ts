@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StockageServiceService, StockOT } from '../stockage-service.service';
 import { DatePipe } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recherche-stockage',
@@ -22,7 +23,8 @@ export class RechercheStockageComponent implements OnInit {
 
   constructor(
     private stockageService: StockageServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +84,7 @@ export class RechercheStockageComponent implements OnInit {
 
     this.currentPage = 1;
     this.updateDisplayedItems();
-    this.erreur = this.filteredStockages.length === 0 ? "Aucun enregistrement trouvé." : '';
+    this.erreur = this.filteredStockages.length === 0 ? this.translate.instant('search_stock.no_records') : '';
   }
 
   updateDisplayedItems() {
@@ -113,12 +115,12 @@ export class RechercheStockageComponent implements OnInit {
 
   getSearchTypeLabel(): string {
     switch (this.searchType) {
-      case 'codeOT': return 'Code OT';
-      case 'codeITM': return 'Code Item';
-      case 'codeComplet': return 'Code Complet';
-      case 'emplacement': return 'Code Baguette';
-      case 'station': return 'Station';
-      default: return 'Champ de recherche';
+      case 'codeOT': return this.translate.instant('search_stock.code_ot');
+      case 'codeITM': return this.translate.instant('search_stock.code_item');
+      case 'codeComplet': return this.translate.instant('search_stock.code_complet');
+      case 'emplacement': return this.translate.instant('search_stock.code_baguette');
+      case 'station': return this.translate.instant('search_stock.station');
+      default: return this.translate.instant('search_stock.search_by');
     }
   }
 

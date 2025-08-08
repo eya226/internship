@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ModifyDialogComponent } from '../modify-dialog/modify-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-enregistrement',
@@ -26,7 +27,8 @@ export class EnregistrementComponent implements OnInit {
   constructor(
     private stockageService: StockageServiceService,
     private datePipe: DatePipe,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class EnregistrementComponent implements OnInit {
         this.updateDisplayedItems();
       },
       error: () => {
-        this.erreur = "Erreur de chargement des données";
+        this.erreur = this.translate.instant('records.load_error');
       }
     });
   }
@@ -50,8 +52,8 @@ export class EnregistrementComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '350px',
       data: {
-        title: 'Confirmer la suppression',
-        message: `Voulez-vous vraiment supprimer l'enregistrement ${item.codeComplet}?`
+        title: this.translate.instant('dialog.confirm_title'),
+        message: this.translate.instant('records.confirm_delete', { code: item.codeComplet })
       }
     });
 
@@ -62,7 +64,7 @@ export class EnregistrementComponent implements OnInit {
             this.loadAll();
           },
           error: (err) => {
-            this.erreur = "Erreur lors de la suppression";
+            this.erreur = this.translate.instant('records.delete_error');
           }
         });
       }
@@ -82,7 +84,7 @@ export class EnregistrementComponent implements OnInit {
             this.loadAll();
           },
           error: (err) => {
-            this.erreur = "Erreur lors de la modification";
+            this.erreur = this.translate.instant('records.modify_error');
           }
         });
       }
@@ -129,7 +131,7 @@ export class EnregistrementComponent implements OnInit {
 
     this.currentPage = 1;
     this.updateDisplayedItems();
-    this.erreur = this.filteredStockages.length === 0 ? "Aucun enregistrement trouvé." : '';
+    this.erreur = this.filteredStockages.length === 0 ? this.translate.instant('records.no_records') : '';
   }
 
   updateDisplayedItems() {
@@ -160,12 +162,12 @@ export class EnregistrementComponent implements OnInit {
 
   getSearchTypeLabel(): string {
     switch (this.searchType) {
-      case 'codeOT': return 'Code OT';
-      case 'codeITM': return 'Code Item';
-      case 'codeComplet': return 'Code Complet';
-      case 'emplacement': return 'Code Baguette';
-      case 'station': return 'Station';
-      default: return 'Champ de recherche';
+      case 'codeOT': return this.translate.instant('records.code_ot');
+      case 'codeITM': return this.translate.instant('records.code_item');
+      case 'codeComplet': return this.translate.instant('records.code_complet');
+      case 'emplacement': return this.translate.instant('records.code_baguette');
+      case 'station': return this.translate.instant('records.station');
+      default: return this.translate.instant('records.search_by');
     }
   }
 
